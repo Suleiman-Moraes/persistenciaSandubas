@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
-import br.com.senaigo.persistenciasandubas.repository.ClassificacaoMercadorias;
+import br.com.senaigo.persistenciasandubas.persistencia.ClassificacaoMercadoriaDAO;
 
 @RestController
 public class ManterClassificacaoMercadoriaBean {
 
 	@Autowired
-	private ClassificacaoMercadorias repositorio;
+    private ClassificacaoMercadoriaDAO repositorio;
 
 	@RequestMapping("/")
 	@ResponseBody
@@ -90,7 +90,7 @@ public class ManterClassificacaoMercadoriaBean {
     @ResponseBody
     public ClassificacaoMercadoria updateClassificacaoMercadoria(@RequestBody ClassificacaoMercadoria objeto) {
     	try {
-			repositorio.save(objeto);
+			repositorio.update(objeto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
