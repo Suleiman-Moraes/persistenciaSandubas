@@ -99,7 +99,7 @@ public class ManterClassificacaoMercadoriaBean {
  
     // URL:
     // http://localhost:8080/SomeContextPath/classificacaomercadoria/{empNo}
-    @RequestMapping(value = "/classificacaomercadoria/{empNo}", //
+    @RequestMapping(value = "/classificacaomercadoria/{id}", //
             method = RequestMethod.DELETE, //
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @ResponseBody
