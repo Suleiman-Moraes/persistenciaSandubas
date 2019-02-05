@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 
-public interface ClassificacaoMercadorias extends JpaRepository<ClassificacaoMercadoria, Long>{
+public interface ClassificacaoMercadoriaDAO extends JpaRepository<ClassificacaoMercadoria, Long>{
 }
