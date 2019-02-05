@@ -1,6 +1,5 @@
 package br.com.senaigo.persistenciasandubas.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 import br.com.senaigo.persistenciasandubas.response.Response;
 import br.com.senaigo.persistenciasandubas.service.ClassificacaoMercadoriaService;
+import br.com.senaigo.persistenciasandubas.util.RestControllerUtil;
 
 @RestController
 @RequestMapping("/classificacaomercadoria")
@@ -28,81 +27,28 @@ public class ManterClassificacaoMercadoriaBean {
 	@Autowired
     private ClassificacaoMercadoriaService service;
 
-	@RequestMapping("/")
-	@ResponseBody
-	public String welcome() {
-		return "Persistencia Classificação Mercadoria";
-	}
-	
 	@GetMapping
-    public ResponseEntity<Response<List<ClassificacaoMercadoria>>> getListaClassificacaoMercadoria() {
-		Response<List<ClassificacaoMercadoria>> response = new Response<>();
-        List<ClassificacaoMercadoria> listClassificacaoMercadoria = service.findAll();
-        response.setData(listClassificacaoMercadoria);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<Response<List<ClassificacaoMercadoria>>> findAll() {
+        return ResponseEntity.ok(RestControllerUtil.findAll(service));
     }
  
     @GetMapping(value = "{id}")
-    public ResponseEntity<Response<ClassificacaoMercadoria>> getClassificacaoMercadoria(@PathVariable("id") String id) {
-    	Response<ClassificacaoMercadoria> response = new Response<>();
-    	try {
-    		ClassificacaoMercadoria objeto = this.service.findById(id);
-    		response.setData(objeto);
-    		return ResponseEntity.ok(response);
-		} catch (Exception e) {
-			response.setData(null);
-			List<String> listErro = new ArrayList<>();
-			listErro.add(e.getMessage());
-			response.setErros(listErro);
-			return ResponseEntity.ok(response);
-		}
+    public ResponseEntity<Response<ClassificacaoMercadoria>> findById(@PathVariable("id") String id) {
+    	return ResponseEntity.ok(RestControllerUtil.findById(service, id));
     }
  
     @PostMapping
-    public ResponseEntity<Response<ClassificacaoMercadoria>> addClassificacaoMercadoria(@RequestBody ClassificacaoMercadoria objeto) {
-    	Response<ClassificacaoMercadoria> response = new Response<>();
-    	try {
-    		ClassificacaoMercadoria objetoNovo = service.save(objeto);
-    		response.setData(objetoNovo);
-    		return ResponseEntity.ok(response); 
-		} catch (Exception e) {
-			response.setData(null);
-			List<String> listErro = new ArrayList<>();
-			listErro.add(e.getMessage());
-			response.setErros(listErro);
-			return ResponseEntity.ok(response);
-		}
+    public ResponseEntity<Response<ClassificacaoMercadoria>> newObject(@RequestBody ClassificacaoMercadoria objeto) {
+    	return ResponseEntity.ok(RestControllerUtil.save(service, objeto));
     }
  
     @PutMapping
-    public ResponseEntity<Response<ClassificacaoMercadoria>> updateClassificacaoMercadoria(@RequestBody ClassificacaoMercadoria objeto) {
-    	Response<ClassificacaoMercadoria> response = new Response<>();
-    	try {
-    		ClassificacaoMercadoria objetoNovo = service.save(objeto);
-    		response.setData(objetoNovo);
-    		return ResponseEntity.ok(response); 
-		} catch (Exception e) {
-			response.setData(null);
-			List<String> listErro = new ArrayList<>();
-			listErro.add(e.getMessage());
-			response.setErros(listErro);
-			return ResponseEntity.ok(response);
-		}
+    public ResponseEntity<Response<ClassificacaoMercadoria>> update(@RequestBody ClassificacaoMercadoria objeto) {
+    	return ResponseEntity.ok(RestControllerUtil.save(service, objeto));
     }
  
     @DeleteMapping(value = "{id}")
-    public ResponseEntity<Response<Boolean>> deleteClassificacaoMercadoria(@PathVariable("id") String id) {
-    	Response<Boolean> response = new Response<>();
-    	try {
-    		Boolean retorno = service.deleteById(id);
-			response.setData(retorno);
-			return ResponseEntity.ok(response);
-		} catch (Exception e) {
-			response.setData(Boolean.FALSE);
-			List<String> listErro = new ArrayList<>();
-			listErro.add(e.getMessage());
-			response.setErros(listErro);
-			return ResponseEntity.ok(response);
-		}
+    public ResponseEntity<Response<Boolean>> deleteById(@PathVariable("id") String id) {
+    	return ResponseEntity.ok(RestControllerUtil.deleteById(service, id));
     }
 }

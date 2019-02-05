@@ -1,15 +1,12 @@
 package br.com.senaigo.persistenciasandubas.service.implementacao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 import br.com.senaigo.persistenciasandubas.repository.ClassificacaoMercadoriaDAO;
-import br.com.senaigo.persistenciasandubas.response.Response;
 import br.com.senaigo.persistenciasandubas.service.ClassificacaoMercadoriaService;
 import lombok.Getter;
 
@@ -59,17 +56,4 @@ public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercador
 	public Boolean deleteById(ClassificacaoMercadoria objeto) {
 		return this.deleteById(objeto.getId());
 	}
-
-	@Override
-	public <T> Response<T> mostrarErroPadraoObject(String... erros) {
-		Response<T> response = new Response<>();
-		response.setData(null);
-		List<String> listErro = new ArrayList<>();
-		for (String erro : erros) {
-			listErro.add(erro);
-		}
-		response.setErros(listErro);
-		return response;
-	}
-
 }
