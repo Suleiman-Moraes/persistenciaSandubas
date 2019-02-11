@@ -25,7 +25,7 @@ import br.com.senaigo.persistenciasandubas.util.RestControllerUtil;
 public class ManterClassificacaoMercadoriaBean {
 
 	@Autowired
-    private ClassificacaoMercadoriaService service;
+    private ClassificacaoMercadoriaService service; 
 
 	@GetMapping
     public ResponseEntity<Response<List<ClassificacaoMercadoria>>> findAll() {
