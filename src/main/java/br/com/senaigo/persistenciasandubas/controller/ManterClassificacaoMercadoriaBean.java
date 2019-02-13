@@ -59,13 +59,7 @@ public class ManterClassificacaoMercadoriaBean {
 			@PathVariable("descricao") String descricao) {
     	Response<Page<ClassificacaoMercadoria>> response = new Response<>();
     	try {
-    		nome = RestControllerUtil.tratarStringUninformed(nome);
-        	descricao = RestControllerUtil.tratarStringUninformed(descricao);
-    		
-    		Page<ClassificacaoMercadoria> pagina = null;
-    		
-    		pagina = service.findByParameters(page, count, id, nome, descricao);
-    		
+    		Page<ClassificacaoMercadoria> pagina = service.paginarComParemetros(page, count, id, nome, descricao);
     		response.setData(pagina);
     		return ResponseEntity.ok(response);
 		} catch (Exception e) {

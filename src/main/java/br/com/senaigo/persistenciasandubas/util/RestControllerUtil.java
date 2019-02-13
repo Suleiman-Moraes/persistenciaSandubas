@@ -92,14 +92,4 @@ public abstract class RestControllerUtil {
 		response.setErros(listErro);
 		return response;
 	}
-    
-    /**
-     * 
-     * @param texto
-     * @return
-     */
-    public static String tratarStringUninformed(String texto) {
-    	texto = texto.equals(ConstantesUtil.UNINFORMED) ? "" : texto;
-    	return texto;
-    }
 }

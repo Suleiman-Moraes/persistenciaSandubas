@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 import br.com.senaigo.persistenciasandubas.repository.ClassificacaoMercadoriaDAO;
 import br.com.senaigo.persistenciasandubas.service.ClassificacaoMercadoriaService;
+import br.com.senaigo.persistenciasandubas.util.StringUtil;
 import lombok.Getter;
 
 @Getter
@@ -61,9 +62,17 @@ public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercador
 	}
 
 	@Override
-	public Page<ClassificacaoMercadoria> findByParameters(Integer page, Integer count, Long id, String nome, String descricao) {
+	public Page<ClassificacaoMercadoria> paginarComParemetros(Integer page, Integer count, Long id, String nome, String descricao) {
+		nome = StringUtil.tratarStringUninformed(nome);
+    	descricao = StringUtil.tratarStringUninformed(descricao);
 		Pageable pages = PageRequest.of(page, count);
-		Page<ClassificacaoMercadoria> pagina = persistencia.findByIdAndNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(id, nome, descricao, pages);
+		Page<ClassificacaoMercadoria> pagina = null;
+		if(id != null && id > 0) {
+			pagina = persistencia.findById(id, pages);
+		}
+		else {
+			pagina = persistencia.findByNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(nome, descricao, pages);
+		}
 		return pagina;
 	}
 }

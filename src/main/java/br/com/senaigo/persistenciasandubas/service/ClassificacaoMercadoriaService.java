@@ -12,5 +12,5 @@ public interface ClassificacaoMercadoriaService extends CRUDPadraoService<Classi
     
     Boolean deleteById(ClassificacaoMercadoria objeto);
     
-    Page<ClassificacaoMercadoria> findByParameters(Integer page, Integer count, Long id, String nome, String descricao);
+    Page<ClassificacaoMercadoria> paginarComParemetros(Integer page, Integer count, Long id, String nome, String descricao);
 }

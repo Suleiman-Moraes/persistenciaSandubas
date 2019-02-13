@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 
 public interface ClassificacaoMercadoriaDAO extends JpaRepository<ClassificacaoMercadoria, Long> {
-	Page<ClassificacaoMercadoria> findByIdAndNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(
-			Long id, String nome, String descricao, Pageable pages);
+	Page<ClassificacaoMercadoria> findByNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(
+			String nome, String descricao, Pageable pages);
+	
+	Page<ClassificacaoMercadoria> findById(Long id, Pageable pages);
 }
