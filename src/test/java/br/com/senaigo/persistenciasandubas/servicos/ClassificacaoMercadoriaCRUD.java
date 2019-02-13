@@ -15,6 +15,7 @@ import org.springframework.http.HttpMethod;
 import com.google.gson.reflect.TypeToken;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
+import br.com.senaigo.persistenciasandubas.model.Page;
 import br.com.senaigo.persistenciasandubas.response.Response;
 import br.com.senaigo.persistenciasandubas.servicos.util.ClientHelp;
 
@@ -112,9 +113,56 @@ public class ClassificacaoMercadoriaCRUD {
 			assertTrue(Boolean.FALSE);
 		}
 	}
+	
+	@Test
+	public void test05Paginacao() {
+		try {
+			final String page = "/0";
+			final String count = "/5";
+			final String idP = "/" + id;
+			final String idP2 = "/0";
+			final String nome = "/ito";
+			final String descricao = "/rodu";
+			final String uninformed = "/uninformed";
+			
+			StringBuilder tudo = new StringBuilder(URL_ENTIDADE);
+			tudo.append(page).append(count);
+			final String urlComecoPadrao = tudo.toString();
+			tudo = new StringBuilder(urlComecoPadrao);
+			tudo.append(idP).append(uninformed).append(uninformed);
+			final String urlID = tudo.toString();
+			tudo = new StringBuilder(urlComecoPadrao);
+			tudo.append(idP2).append(nome).append(uninformed);
+			final String urlNome = tudo.toString();
+			tudo = new StringBuilder(urlComecoPadrao);
+			tudo.append(idP2).append(uninformed).append(descricao);
+			final String urlDescricao = tudo.toString();
+			
+			Long idEsperado = new Long(3);
+			
+			Response<Page<ClassificacaoMercadoria>> response = null;
+			Type type = new TypeToken<Response<Page<ClassificacaoMercadoria>>>() {}.getType();
+			response = (Response<Page<ClassificacaoMercadoria>>) ClientHelp.metodo(urlID, HttpMethod.GET, type);
+			assertNotNull(response);
+			assertNotNull(response.getData().getContent());
+			assertEquals(id, response.getData().getContent().get(0).getId());
+			
+			response = (Response<Page<ClassificacaoMercadoria>>) ClientHelp.metodo(urlNome, HttpMethod.GET, type);
+			assertNotNull(response);
+			assertNotNull(response.getData().getContent());
+			assertEquals(idEsperado, response.getData().getContent().get(0).getId());
+			
+			response = (Response<Page<ClassificacaoMercadoria>>) ClientHelp.metodo(urlDescricao, HttpMethod.GET, type);
+			assertNotNull(response);
+			assertNotNull(response.getData().getContent());
+			assertEquals(idEsperado, response.getData().getContent().get(0).getId());
+		} catch (Exception e) {
+			assertTrue(Boolean.FALSE);
+		}
+	}
 
 	@Test
-	public void test05DeleteById() {
+	public void test06DeleteById() {
 		try {
 			final String url = URL_ENTIDADE + "/" + id;
 			Boolean objeto = null;
