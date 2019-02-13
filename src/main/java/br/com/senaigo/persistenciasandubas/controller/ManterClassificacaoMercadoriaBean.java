@@ -3,6 +3,7 @@ package br.com.senaigo.persistenciasandubas.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,4 +52,24 @@ public class ManterClassificacaoMercadoriaBean {
     public ResponseEntity<Response<Boolean>> deleteById(@PathVariable("id") String id) {
     	return ResponseEntity.ok(RestControllerUtil.deleteById(service, id));
     }
+    
+    @GetMapping(value = "{page}/{count}/{id}/{nome}/{descricao}")
+	public ResponseEntity<Response<Page<ClassificacaoMercadoria>>> findByParams(@PathVariable("page") Integer page,
+			@PathVariable("count") Integer count, @PathVariable("id") Long id, @PathVariable("nome") String nome, 
+			@PathVariable("descricao") String descricao) {
+    	Response<Page<ClassificacaoMercadoria>> response = new Response<>();
+    	try {
+    		nome = RestControllerUtil.tratarStringUninformed(nome);
+        	descricao = RestControllerUtil.tratarStringUninformed(descricao);
+    		
+    		Page<ClassificacaoMercadoria> pagina = null;
+    		
+    		pagina = service.findByParameters(page, count, id, nome, descricao);
+    		
+    		response.setData(pagina);
+    		return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.ok(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
+		}
+	}
 }

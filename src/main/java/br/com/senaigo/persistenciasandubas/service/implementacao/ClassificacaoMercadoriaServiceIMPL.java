@@ -3,6 +3,9 @@ package br.com.senaigo.persistenciasandubas.service.implementacao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
@@ -55,5 +58,12 @@ public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercador
 	@Override
 	public Boolean deleteById(ClassificacaoMercadoria objeto) {
 		return this.deleteById(objeto.getId());
+	}
+
+	@Override
+	public Page<ClassificacaoMercadoria> findByParameters(Integer page, Integer count, Long id, String nome, String descricao) {
+		Pageable pages = PageRequest.of(page, count);
+		Page<ClassificacaoMercadoria> pagina = persistencia.findByIdIgnoreCaseContainingAndNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(id, nome, descricao, pages);
+		return pagina;
 	}
 }

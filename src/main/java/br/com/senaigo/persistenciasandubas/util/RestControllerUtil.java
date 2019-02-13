@@ -6,6 +6,11 @@ import java.util.List;
 import br.com.senaigo.persistenciasandubas.response.Response;
 
 public abstract class RestControllerUtil {
+	/**
+	 * 
+	 * @param service
+	 * @return
+	 */
     public static <T> Response<List<T>> findAll(CRUDPadraoService<T> service) {
     	Response<List<T>> response = new Response<>();
 		try {
@@ -17,6 +22,12 @@ public abstract class RestControllerUtil {
 		}
     }
  
+    /**
+     * 
+     * @param service
+     * @param id
+     * @return
+     */
     public static <T> Response<T> findById(CRUDPadraoService<T> service, String id) {
     	Response<T> response = new Response<>();
     	try {
@@ -28,6 +39,12 @@ public abstract class RestControllerUtil {
 		}
     }
  
+    /**
+     * 
+     * @param service
+     * @param objeto
+     * @return
+     */
     public static <T> Response<T> save(CRUDPadraoService<T> service, T objeto) {
     	Response<T> response = new Response<>();
     	try {
@@ -39,6 +56,12 @@ public abstract class RestControllerUtil {
 		}
     }
  
+    /**
+     * 
+     * @param service
+     * @param id
+     * @return
+     */
     public static <T> Response<Boolean> deleteById(CRUDPadraoService<T> service, String id) {
     	Response<Boolean> response = new Response<>();
     	try {
@@ -54,6 +77,12 @@ public abstract class RestControllerUtil {
 		}
     }
     
+    /**
+     * 
+     * @param response
+     * @param erros
+     * @return
+     */
     public static <T> Response<T> mostrarErroPadraoObject(Response<T> response, String... erros) {
 		response.setData(null);
 		List<String> listErro = new ArrayList<>();
@@ -63,4 +92,14 @@ public abstract class RestControllerUtil {
 		response.setErros(listErro);
 		return response;
 	}
+    
+    /**
+     * 
+     * @param texto
+     * @return
+     */
+    public static String tratarStringUninformed(String texto) {
+    	texto = texto.equals(ConstantesUtil.UNINFORMED) ? "" : texto;
+    	return texto;
+    }
 }
