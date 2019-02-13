@@ -24,6 +24,7 @@ import br.com.senaigo.persistenciasandubas.servicos.util.ClientHelp;
 public class ClassificacaoMercadoriaCRUD {
 	
 	private static final String URL_ENTIDADE = ClientHelp.URL + "/classificacaomercadoria";
+	private Type type = new TypeToken<Response<ClassificacaoMercadoria>>() {}.getType();
 	
 	//atributos
 	private static Long id;
@@ -62,7 +63,6 @@ public class ClassificacaoMercadoriaCRUD {
 		try {
 			ClassificacaoMercadoria objeto = new ClassificacaoMercadoria(null, NOME, DESCRICAO);
 			Response<ClassificacaoMercadoria> response = null;
-			Type type = new TypeToken<Response<ClassificacaoMercadoria>>() {}.getType();
 			response = (Response<ClassificacaoMercadoria>) ClientHelp.metodo(URL_ENTIDADE, HttpMethod.POST, type, objeto);
 			assertNotNull(response);
 			objeto = response.getData();
@@ -82,7 +82,6 @@ public class ClassificacaoMercadoriaCRUD {
 			final String url = URL_ENTIDADE + "/" + id;
 			ClassificacaoMercadoria objeto = null;
 			Response<ClassificacaoMercadoria> response = null;
-			Type type = new TypeToken<Response<ClassificacaoMercadoria>>() {}.getType();
 			response = (Response<ClassificacaoMercadoria>) ClientHelp.metodo(url, HttpMethod.GET, type);
 			assertNotNull(response);
 			objeto = response.getData();
@@ -100,7 +99,6 @@ public class ClassificacaoMercadoriaCRUD {
 		try {
 			ClassificacaoMercadoria objeto = new ClassificacaoMercadoria(id, NOME_UPDATE, DESCRICAO_UPDATE);
 			Response<ClassificacaoMercadoria> response = null;
-			Type type = new TypeToken<Response<ClassificacaoMercadoria>>() {}.getType();
 			response = (Response<ClassificacaoMercadoria>) ClientHelp.metodo(URL_ENTIDADE, HttpMethod.PUT, type, objeto);
 			assertNotNull(response);
 			objeto = response.getData();
