@@ -63,7 +63,7 @@ public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercador
 	@Override
 	public Page<ClassificacaoMercadoria> findByParameters(Integer page, Integer count, Long id, String nome, String descricao) {
 		Pageable pages = PageRequest.of(page, count);
-		Page<ClassificacaoMercadoria> pagina = persistencia.findByIdContainingAndNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(id, nome, descricao, pages);
+		Page<ClassificacaoMercadoria> pagina = persistencia.findByIdAndNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(id, nome, descricao, pages);
 		return pagina;
 	}
 }
