@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.springframework.http.HttpMethod;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -18,10 +17,10 @@ import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 import br.com.senaigo.persistenciasandubas.model.Page;
 import br.com.senaigo.persistenciasandubas.response.Response;
 import br.com.senaigo.persistenciasandubas.servicos.util.ClientHelp;
+import br.com.senaigo.persistenciasandubas.servicos.util.ServicosTestTemplateUtil;
 
-@SuppressWarnings("unchecked")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ClassificacaoMercadoriaCRUD {
+public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<ClassificacaoMercadoria>{
 	
 	private static final String URL_ENTIDADE = ClientHelp.URL + "/classificacaomercadoria";
 	private Type type = new TypeToken<Response<ClassificacaoMercadoria>>() {}.getType();
@@ -38,38 +37,19 @@ public class ClassificacaoMercadoriaCRUD {
 	private static final String DESCRICAO_UPDATE = "teste descrição alteracao";
 
 	@Test
+	@Override
 	public void test01FindAll() {
-		try {
-			Response<List<ClassificacaoMercadoria>> response = null;
-			List<ClassificacaoMercadoria> objeto = null;
-			Type type = new TypeToken<Response<List<ClassificacaoMercadoria>>>() {}.getType();
-			response = (Response<List<ClassificacaoMercadoria>>) ClientHelp.metodo(URL_ENTIDADE, HttpMethod.GET, type);
-			assertNotNull(response);
-			objeto = response.getData();
-			assertNotNull(objeto);
-			assertEquals(2, objeto.size());
-			for (ClassificacaoMercadoria pos : objeto) {
-				assertNotNull(pos);
-				assertNotNull(pos.getId());
-				assertTrue(pos.getId() > 0);
-			}
-		} catch (Exception e) {
-			assertTrue(Boolean.FALSE);
-		}
+		Type type = new TypeToken<Response<List<ClassificacaoMercadoria>>>() {}.getType();
+		testFindAll(2, type);
 	}
-	
+
 	@Test
+	@Override
 	public void test02NewObject() {
 		try {
 			ClassificacaoMercadoria objeto = new ClassificacaoMercadoria(null, NOME, DESCRICAO);
-			Response<ClassificacaoMercadoria> response = null;
-			response = (Response<ClassificacaoMercadoria>) ClientHelp.metodo(URL_ENTIDADE, HttpMethod.POST, type, objeto);
-			assertNotNull(response);
-			objeto = response.getData();
-			assertNotNull(objeto);
-			assertNotNull(objeto.getId());
-			assertEquals(NOME, objeto.getNome());
-			assertEquals(DESCRICAO, objeto.getDescricao());
+			objeto = testNewObject(objeto);
+			testAtributoEquals(NOME, DESCRICAO, objeto);
 			id = objeto.getId();
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
@@ -77,42 +57,32 @@ public class ClassificacaoMercadoriaCRUD {
 	}
 
 	@Test
+	@Override
 	public void test03FindById() {
 		try {
-			final String url = URL_ENTIDADE + "/" + id;
-			ClassificacaoMercadoria objeto = null;
-			Response<ClassificacaoMercadoria> response = null;
-			response = (Response<ClassificacaoMercadoria>) ClientHelp.metodo(url, HttpMethod.GET, type);
-			assertNotNull(response);
-			objeto = response.getData();
-			assertNotNull(objeto);
-			assertNotNull(objeto.getId());
-			assertEquals(NOME, objeto.getNome());
-			assertEquals(DESCRICAO, objeto.getDescricao());
+			ClassificacaoMercadoria objeto = testFindById();
+			testAtributoEquals(NOME, DESCRICAO, objeto);
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
 		}
 	}
 
 	@Test
+	@Override
 	public void test04Update() {
 		try {
 			ClassificacaoMercadoria objeto = new ClassificacaoMercadoria(id, NOME_UPDATE, DESCRICAO_UPDATE);
-			Response<ClassificacaoMercadoria> response = null;
-			response = (Response<ClassificacaoMercadoria>) ClientHelp.metodo(URL_ENTIDADE, HttpMethod.PUT, type, objeto);
-			assertNotNull(response);
-			objeto = response.getData();
-			assertNotNull(objeto);
-			assertNotNull(objeto.getId());
+			objeto = testUpdate(objeto);
 			assertEquals(id, objeto.getId());
-			assertEquals(NOME_UPDATE, objeto.getNome());
-			assertEquals(DESCRICAO_UPDATE, objeto.getDescricao());
+			testAtributoEquals(NOME_UPDATE, DESCRICAO_UPDATE, objeto);
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
 		}
 	}
-	
+
+	@SuppressWarnings("rawtypes")
 	@Test
+	@Override
 	public void test05Paginacao() {
 		try {
 			final String page = "/0";
@@ -136,43 +106,42 @@ public class ClassificacaoMercadoriaCRUD {
 			tudo.append(idP2).append(uninformed).append(descricao);
 			final String urlDescricao = tudo.toString();
 			
-			Long idEsperado = new Long(3);
-			
-			Response<Page<ClassificacaoMercadoria>> response = null;
 			Type type = new TypeToken<Response<Page<ClassificacaoMercadoria>>>() {}.getType();
-			response = (Response<Page<ClassificacaoMercadoria>>) ClientHelp.metodo(urlID, HttpMethod.GET, type);
-			assertNotNull(response);
-			assertNotNull(response.getData().getContent());
-			assertEquals(id, response.getData().getContent().get(0).getId());
-			
-			response = (Response<Page<ClassificacaoMercadoria>>) ClientHelp.metodo(urlNome, HttpMethod.GET, type);
-			assertNotNull(response);
-			assertNotNull(response.getData().getContent());
-			assertEquals(idEsperado, response.getData().getContent().get(0).getId());
-			
-			response = (Response<Page<ClassificacaoMercadoria>>) ClientHelp.metodo(urlDescricao, HttpMethod.GET, type);
-			assertNotNull(response);
-			assertNotNull(response.getData().getContent());
-			assertEquals(idEsperado, response.getData().getContent().get(0).getId());
+			Page[] pages = testPaginacao(type, urlID, urlNome, urlDescricao);
+			Long idEsperado = new Long(3);
+			assertEquals(id, ((ClassificacaoMercadoria) pages[0].getContent().get(0)).getId());
+			for (int i = 1; i < pages.length; i++) {
+				assertEquals(idEsperado, ((ClassificacaoMercadoria) pages[i].getContent().get(0)).getId());
+			}
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
 		}
 	}
+	
+	private void testAtributoEquals(String nome, String descricao, ClassificacaoMercadoria objeto) {
+		assertEquals(nome, objeto.getNome());
+		assertEquals(descricao, objeto.getDescricao());
+	}
 
-	@Test
-	public void test06DeleteById() {
-		try {
-			final String url = URL_ENTIDADE + "/" + id;
-			Boolean objeto = null;
-			Response<Boolean> response = null;
-			Type type = new TypeToken<Response<Boolean>>() {}.getType();
-			response = (Response<Boolean>) ClientHelp.metodo(url, HttpMethod.DELETE, type);
-			assertNotNull(response);
-			objeto = response.getData();
-			assertNotNull(objeto);
-			assertTrue(objeto);
-		} catch (Exception e) {
-			assertTrue(Boolean.FALSE);
-		}
+	@Override
+	public void testAssertNotNullObjectAndId(ClassificacaoMercadoria objeto) {
+		assertNotNull(objeto);
+		assertNotNull(objeto.getId());
+		assertTrue(objeto.getId() > 0);
+	}
+
+	@Override
+	public String getURL_ENTIDADE() {
+		return URL_ENTIDADE;
+	}
+
+	@Override
+	public String getId() {
+		return id + "";
+	}
+
+	@Override
+	public Type getType() {
+		return type;
 	}
 }
