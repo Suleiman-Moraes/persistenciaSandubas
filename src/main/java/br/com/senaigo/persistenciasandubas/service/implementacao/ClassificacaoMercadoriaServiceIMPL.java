@@ -89,4 +89,14 @@ public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercador
 			throw e;
 		}
 	}
+	
+	@Override
+	public Boolean existsByField(String fieldName, String value) throws Exception {
+		try {
+			Boolean objeto = genericDAO.existsByField(ClassificacaoMercadoria.class, fieldName, value);
+			return objeto;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }

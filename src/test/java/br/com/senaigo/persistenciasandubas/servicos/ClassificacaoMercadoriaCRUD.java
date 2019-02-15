@@ -130,6 +130,17 @@ public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<Classi
 		}
 	}
 	
+	@Test
+	@Override
+	public void test08ExistsByField() {
+		try {
+			final String nome = "Refrigerante baitola";
+			testExistsByField("nome", nome);
+		} catch (Exception e) {
+			assertTrue(Boolean.FALSE);
+		}
+	}
+	
 	private void testAtributoEquals(String nome, String descricao, ClassificacaoMercadoria objeto) {
 		assertEquals(nome, objeto.getNome());
 		assertEquals(descricao, objeto.getDescricao());

@@ -62,4 +62,10 @@ public class TipoProdutoServiceIMPL implements TipoProdutoService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Boolean existsByField(String fieldName, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

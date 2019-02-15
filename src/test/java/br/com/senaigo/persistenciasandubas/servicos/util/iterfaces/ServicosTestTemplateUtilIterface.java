@@ -15,6 +15,8 @@ public interface ServicosTestTemplateUtilIterface<T> {
 	void test05Paginacao();
 	
 	void test07FindByField();
+	
+	void test08ExistsByField();
 
 	void testAssertNotNullObjectAndId(T objeto);
 	

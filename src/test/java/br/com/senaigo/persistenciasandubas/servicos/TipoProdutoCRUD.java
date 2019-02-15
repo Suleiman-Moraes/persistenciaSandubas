@@ -118,6 +118,7 @@ public class TipoProdutoCRUD extends ServicosTestTemplateUtil<TipoProduto>{
 		}
 	}
 	
+	@Test
 	@Override
 	public void test07FindByField() {
 		try {
@@ -127,6 +128,13 @@ public class TipoProdutoCRUD extends ServicosTestTemplateUtil<TipoProduto>{
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
 		}
+	}
+	
+	@Test
+	@Override
+	public void test08ExistsByField() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	private void testAtributoEquals(String nome, String descricao, TipoProduto objeto) {

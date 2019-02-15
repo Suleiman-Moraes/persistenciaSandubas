@@ -11,5 +11,7 @@ public interface CRUDPadraoService<T> {
  
     Boolean deleteById(String id);
     
+    Boolean existsByField(String fieldName, String value) throws Exception;
+    
     T findByField(String field, String value);
 }

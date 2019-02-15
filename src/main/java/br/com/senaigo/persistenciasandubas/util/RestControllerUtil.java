@@ -39,6 +39,13 @@ public abstract class RestControllerUtil {
 		}
     }
     
+    /**
+     * 
+     * @param service
+     * @param fieldName
+     * @param value
+     * @return
+     */
     public static <T> Response<T> findByField(CRUDPadraoService<T> service, String fieldName, String value) {
     	Response<T> response = new Response<>();
     	try {
@@ -79,6 +86,21 @@ public abstract class RestControllerUtil {
     		Boolean retorno = service.deleteById(id);
 			response.setData(retorno);
 			return response;
+		} catch (Exception e) {
+			response.setData(Boolean.FALSE);
+			List<String> listErro = new ArrayList<>();
+			listErro.add(e.getMessage());
+			response.setErros(listErro);
+			return response;
+		}
+    }
+    
+    public static <T> Response<Boolean> existsByField(CRUDPadraoService<T> service, String fieldName, String value) {
+    	Response<Boolean> response = new Response<>();
+    	try {
+    		Boolean objeto = service.existsByField(fieldName, value);
+    		response.setData(objeto);
+    		return response;
 		} catch (Exception e) {
 			response.setData(Boolean.FALSE);
 			List<String> listErro = new ArrayList<>();
