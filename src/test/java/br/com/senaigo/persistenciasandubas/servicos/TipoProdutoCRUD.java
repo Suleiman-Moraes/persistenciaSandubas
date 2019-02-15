@@ -13,17 +13,17 @@ import org.junit.runners.MethodSorters;
 
 import com.google.gson.reflect.TypeToken;
 
-import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 import br.com.senaigo.persistenciasandubas.model.Page;
+import br.com.senaigo.persistenciasandubas.model.TipoProduto;
 import br.com.senaigo.persistenciasandubas.response.Response;
 import br.com.senaigo.persistenciasandubas.servicos.util.ClientHelp;
 import br.com.senaigo.persistenciasandubas.servicos.util.ServicosTestTemplateUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<ClassificacaoMercadoria>{
+public class TipoProdutoCRUD extends ServicosTestTemplateUtil<TipoProduto>{
 	
-	private static final String URL_ENTIDADE = ClientHelp.URL + "/classificacaomercadoria";
-	private Type type = new TypeToken<Response<ClassificacaoMercadoria>>() {}.getType();
+	private static final String URL_ENTIDADE = ClientHelp.URL + "/tipoproduto";
+	private Type type = new TypeToken<Response<TipoProduto>>() {}.getType();
 	
 	//atributos
 	private static Long id;
@@ -39,7 +39,7 @@ public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<Classi
 	@Test
 	@Override
 	public void test01FindAll() {
-		Type type = new TypeToken<Response<List<ClassificacaoMercadoria>>>() {}.getType();
+		Type type = new TypeToken<Response<List<TipoProduto>>>() {}.getType();
 		testFindAll(2, type);
 	}
 
@@ -47,7 +47,7 @@ public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<Classi
 	@Override
 	public void test02NewObject() {
 		try {
-			ClassificacaoMercadoria objeto = new ClassificacaoMercadoria(null, NOME, DESCRICAO);
+			TipoProduto objeto = new TipoProduto(null, NOME, DESCRICAO);
 			objeto = testNewObject(objeto);
 			testAtributoEquals(NOME, DESCRICAO, objeto);
 			id = objeto.getId();
@@ -60,7 +60,7 @@ public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<Classi
 	@Override
 	public void test03FindById() {
 		try {
-			ClassificacaoMercadoria objeto = testFindById();
+			TipoProduto objeto = testFindById();
 			testAtributoEquals(NOME, DESCRICAO, objeto);
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
@@ -71,7 +71,7 @@ public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<Classi
 	@Override
 	public void test04Update() {
 		try {
-			ClassificacaoMercadoria objeto = new ClassificacaoMercadoria(id, NOME_UPDATE, DESCRICAO_UPDATE);
+			TipoProduto objeto = new TipoProduto(id, NOME_UPDATE, DESCRICAO_UPDATE);
 			objeto = testUpdate(objeto);
 			assertEquals(id, objeto.getId());
 			testAtributoEquals(NOME_UPDATE, DESCRICAO_UPDATE, objeto);
@@ -106,37 +106,36 @@ public class ClassificacaoMercadoriaCRUD extends ServicosTestTemplateUtil<Classi
 			tudo.append(idP2).append(uninformed).append(descricao);
 			final String urlDescricao = tudo.toString();
 			
-			Type type = new TypeToken<Response<Page<ClassificacaoMercadoria>>>() {}.getType();
+			Type type = new TypeToken<Response<Page<TipoProduto>>>() {}.getType();
 			Page[] pages = testPaginacao(type, urlID, urlNome, urlDescricao);
 			Long idEsperado = new Long(3);
-			assertEquals(id, ((ClassificacaoMercadoria) pages[0].getContent().get(0)).getId());
+			assertEquals(id, ((TipoProduto) pages[0].getContent().get(0)).getId());
 			for (int i = 1; i < pages.length; i++) {
-				assertEquals(idEsperado, ((ClassificacaoMercadoria) pages[i].getContent().get(0)).getId());
+				assertEquals(idEsperado, ((TipoProduto) pages[i].getContent().get(0)).getId());
 			}
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
 		}
 	}
 	
-	@Test
 	@Override
 	public void test07FindByField() {
 		try {
 			final String nome = "Refrigerante baitola";
-			ClassificacaoMercadoria objeto = testFindByField("nome", nome);
+			TipoProduto objeto = testFindByField("nome", nome);
 			testAtributoEquals(nome, "Produtos prontos para venda", objeto);
 		} catch (Exception e) {
 			assertTrue(Boolean.FALSE);
 		}
 	}
 	
-	private void testAtributoEquals(String nome, String descricao, ClassificacaoMercadoria objeto) {
+	private void testAtributoEquals(String nome, String descricao, TipoProduto objeto) {
 		assertEquals(nome, objeto.getNome());
 		assertEquals(descricao, objeto.getDescricao());
 	}
 
 	@Override
-	public void testAssertNotNullObjectAndId(ClassificacaoMercadoria objeto) {
+	public void testAssertNotNullObjectAndId(TipoProduto objeto) {
 		assertNotNull(objeto);
 		assertNotNull(objeto.getId());
 		assertTrue(objeto.getId() > 0);

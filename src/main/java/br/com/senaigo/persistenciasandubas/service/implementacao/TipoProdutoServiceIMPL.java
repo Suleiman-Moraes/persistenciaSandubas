@@ -56,4 +56,10 @@ public class TipoProdutoServiceIMPL implements TipoProdutoService {
 	public Boolean deleteById(TipoProduto objeto) {
 		return this.deleteById(objeto.getId());
 	}
+
+	@Override
+	public TipoProduto findByField(String field, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 import br.com.senaigo.persistenciasandubas.repository.ClassificacaoMercadoriaDAO;
+import br.com.senaigo.persistenciasandubas.repository.hql.GenercicDAO;
 import br.com.senaigo.persistenciasandubas.service.ClassificacaoMercadoriaService;
 import br.com.senaigo.persistenciasandubas.util.StringUtil;
 import lombok.Getter;
@@ -19,7 +20,10 @@ import lombok.Getter;
 public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercadoriaService {
 	
 	@Autowired
-	ClassificacaoMercadoriaDAO persistencia;
+	private ClassificacaoMercadoriaDAO persistencia;
+	
+	@Autowired
+	private GenercicDAO genericDAO;
 
 	@Override
 	public List<ClassificacaoMercadoria> findAll() {
@@ -74,5 +78,15 @@ public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercador
 			pagina = persistencia.findByNomeIgnoreCaseContainingAndDescricaoIgnoreCaseContainingOrderByIdDesc(nome, descricao, pages);
 		}
 		return pagina;
+	}
+
+	@Override
+	public ClassificacaoMercadoria findByField(String field, String value) {
+		try {
+			ClassificacaoMercadoria objeto = genericDAO.findByField(ClassificacaoMercadoria.class, field, value);
+			return objeto;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }

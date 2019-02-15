@@ -14,9 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 
 public class ClientHelp {
-	private static final String HOST = "persistenciasandubas.herokuapp.com";
-	private static final String PORT = "";
-	public static final String URL = "http://" + HOST + PORT;
+	public static final String URL = "https://persistenciasandubas.herokuapp.com";
 	
 	public static <T> Object metodo(String url, HttpMethod httpMethod, Type type) {
 		return metodo(url, httpMethod, type, null);

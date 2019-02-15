@@ -10,4 +10,6 @@ public interface CRUDPadraoService<T> {
     T save(T objeto);
  
     Boolean deleteById(String id);
+    
+    T findByField(String field, String value);
 }

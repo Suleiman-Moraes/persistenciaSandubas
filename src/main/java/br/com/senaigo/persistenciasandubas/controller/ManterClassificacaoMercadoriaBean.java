@@ -66,4 +66,10 @@ public class ManterClassificacaoMercadoriaBean {
 			return ResponseEntity.ok(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
 		}
 	}
+    
+    @GetMapping(value = "field={field}/value={value}")
+    public ResponseEntity<Response<ClassificacaoMercadoria>> findByField(@PathVariable("field") String field, 
+    		@PathVariable("value") String value) {
+    	return ResponseEntity.ok(RestControllerUtil.findByField(service, field, value));
+    }
 }

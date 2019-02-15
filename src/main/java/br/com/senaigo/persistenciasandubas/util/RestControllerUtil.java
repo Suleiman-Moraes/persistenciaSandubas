@@ -38,6 +38,17 @@ public abstract class RestControllerUtil {
 			return mostrarErroPadraoObject(response, e.getMessage());
 		}
     }
+    
+    public static <T> Response<T> findByField(CRUDPadraoService<T> service, String fieldName, String value) {
+    	Response<T> response = new Response<>();
+    	try {
+    		T objeto = service.findByField(fieldName, value);
+    		response.setData(objeto);
+    		return response;
+		} catch (Exception e) {
+			return mostrarErroPadraoObject(response, e.getMessage());
+		}
+    }
  
     /**
      * 

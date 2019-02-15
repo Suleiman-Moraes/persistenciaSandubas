@@ -118,4 +118,16 @@ public abstract class ServicosTestTemplateUtil<T> implements ServicosTestTemplat
 			assertTrue(Boolean.FALSE);
 		}
 	}
+	
+	public T testFindByField(String field, String value) {
+		try {
+			String url = String.format("%s/field=%s/value=%s", getURL_ENTIDADE(), field, value);
+			T objeto = (T) testPadrao(getType(), HttpMethod.GET, url, null);
+			testAssertNotNullObjectAndId(objeto);
+			return objeto;
+		} catch (Exception e) {
+			assertTrue(Boolean.FALSE);
+			throw e;
+		}
+	}
 }
