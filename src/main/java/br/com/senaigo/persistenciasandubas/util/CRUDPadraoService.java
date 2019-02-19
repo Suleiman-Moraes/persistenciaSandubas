@@ -3,7 +3,7 @@ package br.com.senaigo.persistenciasandubas.util;
 import java.util.List;
 
 public interface CRUDPadraoService<T> {
-	public static final String OBJETO_EXISTENTE = "Objeto ja existente.";
+	public static final String OBJETO_EXISTENTE = FacesUtil.propertiesLoader().getProperty("classificacaoMercadoriaExistente");
 	
 	List<T> findAll();
 	 
