@@ -17,8 +17,8 @@ public class FacesUtil {
 	public static Properties properties(String name) {
 		Properties prop = new Properties();
 		try {
-			String caminho = new File("src\\main\\resources\\br\\com\\senaigo\\persistenciasandubas\\message\\" + name).getAbsolutePath();
-			System.out.println(caminho);
+			String caminho = new File("src/main/resources/br/com/senaigo/persistenciasandubas/message/" + name).getAbsolutePath();
+			System.out.println("Suleiman Moraes " + caminho);
 			File file = new File(caminho);
 			FileInputStream fileInputStream = new FileInputStream(file);
 			prop.load(fileInputStream);
