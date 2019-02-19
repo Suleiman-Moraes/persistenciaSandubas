@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import br.com.senaigo.persistenciasandubas.message.MessagesLoader;
-
 public class FacesUtil {
 
 	public static Properties propertiesLoader() {
@@ -19,8 +17,8 @@ public class FacesUtil {
 	public static Properties properties(String name) {
 		Properties prop = new Properties();
 		try {
-			String atualDir = MessagesLoader.class.getResource("").getPath();
-			File file = new File(atualDir + name);
+			String caminho = new File("src\\main\\resources\\br\\com\\senaigo\\persistenciasandubas\\message\\" + name).getAbsolutePath();
+			File file = new File(caminho);
 			FileInputStream fileInputStream = new FileInputStream(file);
 			prop.load(fileInputStream);
 			fileInputStream.close();
