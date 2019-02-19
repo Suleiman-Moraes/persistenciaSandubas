@@ -41,8 +41,23 @@ public class ClassificacaoMercadoriaServiceIMPL implements ClassificacaoMercador
 	}
 
 	@Override
-	public ClassificacaoMercadoria save(ClassificacaoMercadoria objeto) {
-		return persistencia.save(objeto);
+	public ClassificacaoMercadoria save(ClassificacaoMercadoria objeto) throws Exception{
+		try {
+			if(objeto.getId() == null || objeto.getId() <= 0) {
+				if(existsByField("nome", objeto.getNome())) {
+					throw new Exception(OBJETO_EXISTENTE);
+				}
+			}
+			else {
+				ClassificacaoMercadoria aux = findByField("nome", objeto.getNome());
+				if(aux != null && aux.getId() != objeto.getId()) {
+					throw new Exception(OBJETO_EXISTENTE);
+				}
+			}
+			return persistencia.save(objeto);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Override
