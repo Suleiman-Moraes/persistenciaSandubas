@@ -67,13 +67,13 @@ public class ManterClassificacaoMercadoriaBean {
 		}
 	}
     
-    @GetMapping(value = "field={field}&value={value}")
+    @GetMapping(value = "field={field}/value={value}")
     public ResponseEntity<Response<ClassificacaoMercadoria>> findByField(@PathVariable("field") String field, 
     		@PathVariable("value") String value) {
     	return ResponseEntity.ok(RestControllerUtil.findByField(service, field, value));
     }
     
-    @GetMapping(value = "/exists/field={field}&value={value}")
+    @GetMapping(value = "/exists/field={field}/value={value}")
     public ResponseEntity<Response<Boolean>> existsByField(@PathVariable("field") String field, 
     		@PathVariable("value") String value) {
     	return ResponseEntity.ok(RestControllerUtil.existsByField(service, field, value));

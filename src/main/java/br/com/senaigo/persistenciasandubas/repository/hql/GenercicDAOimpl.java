@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.senaigo.persistenciasandubas.util.StringUtil;
+
 @SuppressWarnings("unchecked")
 @Transactional
 @Repository
@@ -51,9 +53,10 @@ public class GenercicDAOimpl implements GenercicDAO{
 			Table table = clazz.getAnnotation(Table.class);
 			final String tableName = table.name();
 			String fieldName = "";
-			Field fieldd = clazz.getField(field);
-			if(fieldd.getAnnotation(Column.class) != null) {
-				fieldName = fieldd.getAnnotation(Column.class).name();
+			Field fieldd = clazz.getDeclaredField(field);
+			Column column = fieldd.getAnnotation(Column.class);
+			if(column != null && StringUtil.isNotNullOrEmpity(column.name())) {
+				fieldName = column.name();
 			}
 			else {
 				fieldName = field;

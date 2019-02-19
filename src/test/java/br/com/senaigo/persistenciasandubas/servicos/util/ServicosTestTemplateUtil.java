@@ -121,7 +121,7 @@ public abstract class ServicosTestTemplateUtil<T> implements ServicosTestTemplat
 	
 	public T testFindByField(String field, String value) {
 		try {
-			String url = String.format("%s/field=%s&value=%s", getURL_ENTIDADE(), field, value);
+			String url = String.format("%s/field=%s/value=%s", getURL_ENTIDADE(), field, value);
 			T objeto = (T) testPadrao(getType(), HttpMethod.GET, url, null);
 			testAssertNotNullObjectAndId(objeto);
 			return objeto;
@@ -133,11 +133,11 @@ public abstract class ServicosTestTemplateUtil<T> implements ServicosTestTemplat
 	
 	public void testExistsByField(String field, String value) {
 		try {
-			String url = String.format("%s/exists?field=%s&value=%s", getURL_ENTIDADE(), field, value);
+			String url = String.format("%s/exists/field=%s/value=%s", getURL_ENTIDADE(), field, value);
 			Boolean objeto = null;
 			Response<Boolean> response = null;
 			Type type = new TypeToken<Response<Boolean>>() {}.getType();
-			response = (Response<Boolean>) ClientHelp.metodo(url, HttpMethod.DELETE, type);
+			response = (Response<Boolean>) ClientHelp.metodo(url, HttpMethod.GET, type);
 			assertNotNull(response);
 			objeto = response.getData();
 			assertNotNull(objeto);
