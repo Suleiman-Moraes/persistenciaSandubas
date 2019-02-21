@@ -64,8 +64,4 @@ public class ClassificacaoMercadoria implements Serializable{
 		return true;
 	}
 	
-	@Override
-	public String toString() {
-		return "ClassificacaoMercadoria [id=" + id + ", nome=" + nome + ", descricao=" + descricao + "]";
-	}
 }
