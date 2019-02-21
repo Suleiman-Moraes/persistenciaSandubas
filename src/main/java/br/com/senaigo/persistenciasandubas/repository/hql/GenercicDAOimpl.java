@@ -30,7 +30,8 @@ public class GenercicDAOimpl implements GenercicDAO{
 			T objeto = (T) entityManager.createQuery(hql, clazz).setMaxResults(1).getSingleResult();
 			return objeto;
 		} catch (Exception e) {
-			throw e;
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
@@ -43,7 +44,8 @@ public class GenercicDAOimpl implements GenercicDAO{
 			}
 			return Boolean.FALSE;
 		} catch (Exception e) {
-			throw e;
+			e.printStackTrace();
+			return Boolean.FALSE;
 		}
 	}
 
@@ -66,7 +68,8 @@ public class GenercicDAOimpl implements GenercicDAO{
 			Long objeto = new Long(entityManager.createNativeQuery(sql).getSingleResult() + "");
 			return objeto;
 		} catch (Exception e) {
-			throw e;
+			e.printStackTrace();
+			return new Long(0);
 		}
 	}
 }
