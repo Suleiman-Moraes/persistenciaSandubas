@@ -1,12 +1,12 @@
-package br.com.senaigo.persistenciasandubas.security.controller;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@CrossOrigin(origins = "*")
-public class AuthenticationRestController {
-
+//package br.com.senaigo.persistenciasandubas.security.controller;
+//
+//import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//@RestController
+//@CrossOrigin(origins = "*")
+//public class AuthenticationRestController {
+//
 //	@Autowired
 //	private AuthenticationManager authenticationManager;
 //
@@ -46,4 +46,4 @@ public class AuthenticationRestController {
 //			return ResponseEntity.badRequest().body(null);
 //		}
 //	}
-}
+//}
