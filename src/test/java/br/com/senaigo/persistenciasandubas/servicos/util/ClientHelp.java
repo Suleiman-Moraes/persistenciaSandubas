@@ -13,20 +13,26 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 
+import br.com.senaigo.persistenciasandubas.model.Token;
+import br.com.senaigo.persistenciasandubas.model.User;
+
 public class ClientHelp {
 	public static final String URL = "https://persistenciasandubas.herokuapp.com";
 //	public static final String URL = "http://localhost:8080";
+	
+	private static String TOKEN = null;
 	
 	public static <T> Object metodo(String url, HttpMethod httpMethod, Type type) {
 		return metodo(url, httpMethod, type, null);
 	}
 	
 	public static <T> Object metodo(String url, HttpMethod httpMethod, Type type, T object) {
+		atualizarToken();
 		HttpHeaders headers = new HttpHeaders();
 		
 		headers.setAccept(Arrays.asList(new MediaType[] {MediaType.APPLICATION_JSON}));
 		headers.setContentType(MediaType.APPLICATION_JSON);
-//		headers.set("key", "value");
+		headers.set("Authorization", TOKEN);
 		
 		HttpEntity<T> entity = new HttpEntity<>(object, headers);
 		RestTemplate restTemplate = new RestTemplate();
@@ -43,6 +49,21 @@ public class ClientHelp {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	private static void atualizarToken() {
+		if(TOKEN == null) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setAccept(Arrays.asList(new MediaType[] {MediaType.APPLICATION_JSON}));
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			HttpEntity<User> entity = new HttpEntity<>(new User(), headers);
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<Token> response = restTemplate.exchange(URL + "/auth", HttpMethod.POST, entity, Token.class);
+			HttpStatus httpStatus = response.getStatusCode();
+			System.out.println("Status" + httpStatus);
+			Token result = response.getBody();
+			TOKEN = result.getToken();
 		}
 	}
 }

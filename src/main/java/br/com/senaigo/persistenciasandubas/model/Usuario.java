@@ -44,7 +44,7 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Size(min = 6, message = "A confirmação da senha deve ter pelo menos 6 caracteres")
+//	@Size(min = 6, message = "A confirmação da senha deve ter pelo menos 6 caracteres")
 	@Column(length = 32)
 	private String senha;
 
@@ -82,7 +82,7 @@ public class Usuario implements Serializable{
 	@JoinColumn(name = "id_telefone")
 	private Telefone telefone;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade={CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name = "usuario_perfil", joinColumns = { @JoinColumn(name = "id_usuario") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_perfil") })
 	private List<Perfil> perfis;

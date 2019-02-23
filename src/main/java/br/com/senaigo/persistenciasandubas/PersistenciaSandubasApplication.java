@@ -16,6 +16,7 @@ import br.com.senaigo.persistenciasandubas.model.Email;
 import br.com.senaigo.persistenciasandubas.model.Telefone;
 import br.com.senaigo.persistenciasandubas.model.Usuario;
 import br.com.senaigo.persistenciasandubas.model.enummeration.FuncaoUsuarioEnum;
+import br.com.senaigo.persistenciasandubas.model.enummeration.StatusUsuarioEnum;
 import br.com.senaigo.persistenciasandubas.model.enummeration.TipoTelefoneEnum;
 import br.com.senaigo.persistenciasandubas.service.UsuarioService;
 
@@ -39,6 +40,7 @@ public class PersistenciaSandubasApplication extends SpringBootServletInitialize
 		admin.setSenha("123456");
 		admin.setNome("root");
 		admin.setLogin("root");
+		admin.setStatusUsuarioEnum(StatusUsuarioEnum.ATIVO);
 		admin.setFuncaoUsuarioEnum(FuncaoUsuarioEnum.ROOT);
 		admin.setTelefone(new Telefone(null, "(62)998264577", TipoTelefoneEnum.CELULAR));
 		

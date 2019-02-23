@@ -62,7 +62,8 @@ public class UsuarioServiceIMPL implements UsuarioService{
 			objeto.setSenha(passwordEncoder.encode(StringUtil.isNotNullOrEmpity(objeto.getSenha()) 
 					? objeto.getSenha() : FacesUtil.propertiesLoader().getProperty("usuarioSenhaPadrao")));
 			List<Perfil> perfis = new LinkedList<>();
-			perfis.add(perfilService.findById(objeto.getFuncaoUsuarioEnum().getId()));
+			perfis.add(genericDAO.findByIdEager(Perfil.class, objeto.getFuncaoUsuarioEnum().getId()));
+//			perfis.add(perfilService.findById(objeto.getFuncaoUsuarioEnum().getId()));
 			objeto.setPerfis(perfis);
 			
 			if(objeto.getId() == null || objeto.getId() <= 0) {
@@ -76,7 +77,7 @@ public class UsuarioServiceIMPL implements UsuarioService{
 					throw new Exception(OBJETO_EXISTENTE);
 				}
 			}
-			return persistencia.save(objeto);
+			return genericDAO.update(objeto);
 		} catch (Exception e) {
 			throw e;
 		}

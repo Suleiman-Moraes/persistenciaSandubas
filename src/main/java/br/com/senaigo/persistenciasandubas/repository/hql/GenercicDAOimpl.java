@@ -4,6 +4,11 @@ import java.lang.reflect.Field;
 
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 
@@ -11,9 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.senaigo.persistenciasandubas.util.StringUtil;
-import lombok.Getter;
 
-@Getter
 @SuppressWarnings("unchecked")
 @Transactional
 @Repository
@@ -32,7 +35,6 @@ public class GenercicDAOimpl implements GenercicDAO{
 			T objeto = (T) entityManager.createQuery(hql, clazz).setMaxResults(1).getSingleResult();
 			return objeto;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -46,7 +48,6 @@ public class GenercicDAOimpl implements GenercicDAO{
 			}
 			return Boolean.FALSE;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return Boolean.FALSE;
 		}
 	}
@@ -70,8 +71,44 @@ public class GenercicDAOimpl implements GenercicDAO{
 			Long objeto = new Long(entityManager.createNativeQuery(sql).getSingleResult() + "");
 			return objeto;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new Long(0);
 		}
+	}
+	
+	@Override
+	public <T> T findByIdEager(Class<T> type, String pk) {
+		Table table = type.getAnnotation(javax.persistence.Table.class);
+		if (table != null) {
+
+			String hql = String.format("SELECT %s FROM %s %s", type.getSimpleName().toLowerCase(), type.getSimpleName(),
+					type.getSimpleName().toLowerCase());
+			//JOIN FETCH apelidoTabela.atributo apelidoAtributo
+			Field[] atribustos = type.getDeclaredFields();
+			StringBuilder joins = new StringBuilder("");
+			StringBuilder where = new StringBuilder("");
+			for(Field atributo : atribustos) {
+				if(atributo.getAnnotation(ManyToOne.class) != null 
+						|| atributo.getAnnotation(OneToOne.class) != null 
+						|| atributo.getAnnotation(ManyToMany.class) != null 
+						|| atributo.getAnnotation(OneToMany.class) != null) {
+					joins.append(" JOIN FETCH ").append(type.getSimpleName().toLowerCase());
+					joins.append(".").append(atributo.getName()).append(" ");
+					joins.append(atributo.getName().toLowerCase());
+				}else if(atributo.getAnnotation(Id.class) != null) {
+					where.append(" WHERE ").append(type.getSimpleName().toLowerCase());
+					where.append(".").append(atributo.getName()).append(" = '").append(pk).append("'");
+				}
+			}
+			hql += joins.toString();
+			hql += where.toString();
+			return entityManager.createQuery(hql, type).setMaxResults(1).getSingleResult();
+
+		}
+		return null;
+	}
+
+	@Override
+	public <T> T update(T entity) {
+		return entityManager.merge(entity);
 	}
 }

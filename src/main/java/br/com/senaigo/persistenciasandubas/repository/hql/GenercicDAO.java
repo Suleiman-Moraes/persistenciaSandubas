@@ -1,7 +1,5 @@
 package br.com.senaigo.persistenciasandubas.repository.hql;
 
-import javax.persistence.EntityManager;
-
 public interface GenercicDAO {
 	<T> T findByField(Class<?> clazz, String field, Object value);
 	
@@ -9,5 +7,7 @@ public interface GenercicDAO {
 	
 	Long countByField(Class<?> clazz, String field, Object value)throws Exception;
 	
-	EntityManager getEntityManager();
+	<T> T findByIdEager(Class<T> type, String pk);
+	
+	<T> T update(T entity);
 }

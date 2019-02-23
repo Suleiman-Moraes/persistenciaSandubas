@@ -107,13 +107,13 @@ public class PerfilServiceIMPL implements PerfilService{
 		return pagina;
 	}
 	
-	public Perfil findPerfilIdEager(Long id) {
-		try {
-			genericDAO.getEntityManager().createQuery(hql, clazz).setMaxResults(1).getSingleResult();
-			T objeto = (T) entityManager.createQuery(hql, clazz).setMaxResults(1).getSingleResult();
-			return objeto;
-		} catch (Exception e) {
-			return null;
-		}
-	}
+//	public Perfil findPerfilIdEager(Long id) {
+//		try {
+//			genericDAO.getEntityManager().createQuery(hql, clazz).setMaxResults(1).getSingleResult();
+//			T objeto = (T) entityManager.createQuery(hql, clazz).setMaxResults(1).getSingleResult();
+//			return objeto;
+//		} catch (Exception e) {
+//			return null;
+//		}
+//	}
 }
