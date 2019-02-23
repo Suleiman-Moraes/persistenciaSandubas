@@ -74,11 +74,11 @@ public class Usuario implements Serializable{
 	@Column(name = "tipo_funcao")
 	private FuncaoUsuarioEnum funcaoUsuarioEnum;
 	
-	@ManyToOne(cascade=CascadeType.MERGE)
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "id_email")
 	private Email email;
 
-	@ManyToOne(cascade=CascadeType.MERGE)
+	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "id_telefone")
 	private Telefone telefone;
 

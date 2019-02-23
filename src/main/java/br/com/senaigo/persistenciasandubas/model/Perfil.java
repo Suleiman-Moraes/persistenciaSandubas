@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Perfil implements Serializable {
 	@Column(nullable = false, length = 250)
 	private String descricao;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "perfil_funcionalidade", joinColumns = { @JoinColumn(name = "id_perfil") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_funcionalidade") })
 	private List<Funcionalidade> funcionalidades;

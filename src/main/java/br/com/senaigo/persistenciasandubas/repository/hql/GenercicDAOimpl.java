@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.senaigo.persistenciasandubas.util.StringUtil;
+import lombok.Getter;
 
+@Getter
 @SuppressWarnings("unchecked")
 @Transactional
 @Repository

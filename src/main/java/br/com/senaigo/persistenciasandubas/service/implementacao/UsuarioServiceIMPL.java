@@ -35,8 +35,8 @@ public class UsuarioServiceIMPL implements UsuarioService{
 	@Autowired
 	private GenercicDAO genericDAO;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public List<Usuario> findAll() {
@@ -59,8 +59,8 @@ public class UsuarioServiceIMPL implements UsuarioService{
 			else {
 				objeto.setDataAtivacao(new Date());
 			}
-//			objeto.setSenha(passwordEncoder.encode(StringUtil.isNotNullOrEmpity(objeto.getSenha()) 
-//					? objeto.getSenha() : FacesUtil.propertiesLoader().getProperty("usuarioSenhaPadrao")));
+			objeto.setSenha(passwordEncoder.encode(StringUtil.isNotNullOrEmpity(objeto.getSenha()) 
+					? objeto.getSenha() : FacesUtil.propertiesLoader().getProperty("usuarioSenhaPadrao")));
 			List<Perfil> perfis = new LinkedList<>();
 			perfis.add(perfilService.findById(objeto.getFuncaoUsuarioEnum().getId()));
 			objeto.setPerfis(perfis);
@@ -108,7 +108,7 @@ public class UsuarioServiceIMPL implements UsuarioService{
 			Usuario objeto = genericDAO.findByField(Usuario.class, field, value);
 			return objeto;
 		} catch (Exception e) {
-			throw e;
+			return null;
 		}
 	}
 

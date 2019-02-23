@@ -32,13 +32,13 @@ public class Funcionalidade implements Serializable {
 	@NotNull
 	@Column(nullable = false, length = 200)
 	private String descricao;
-
+	
 	public Funcionalidade() {}
 	public Funcionalidade(Long id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
