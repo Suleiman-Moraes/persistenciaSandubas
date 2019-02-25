@@ -10,4 +10,6 @@ public interface GenercicDAO {
 	<T> T findByIdEager(Class<T> type, String pk);
 	
 	<T> T update(T entity);
+	
+	void delete(Object objeto) throws Exception;
 }

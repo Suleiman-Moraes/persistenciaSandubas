@@ -109,6 +109,19 @@ public class GenercicDAOimpl implements GenercicDAO{
 
 	@Override
 	public <T> T update(T entity) {
-		return entityManager.merge(entity);
+		try {
+			return entityManager.merge(entity);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public void delete(Object objeto) throws Exception {
+		try {
+			this.entityManager.remove(objeto);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 }
