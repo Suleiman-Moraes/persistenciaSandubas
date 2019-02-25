@@ -142,6 +142,17 @@ public class UsuarioServiceIMPL implements UsuarioService{
 		return pagina;
 	}
 	
+	@Override
+	public Usuario inativarUsuarioById(String id) throws Exception {
+		try {
+			Usuario objeto = persistencia.findById(Long.valueOf(id)).get();
+			objeto.setStatusUsuarioEnum(StatusUsuarioEnum.INATIVO);
+			return save(objeto);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	private void validarUsuario(Usuario objeto) throws Exception{
 		if(StringUtil.isNullOrEmpity(objeto.getNome())) {
 			throw new Exception(FacesUtil.propertiesLoader().getProperty("usuarioNomeNaoInserido"));

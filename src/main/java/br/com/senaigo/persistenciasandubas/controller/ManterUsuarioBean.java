@@ -79,4 +79,16 @@ public class ManterUsuarioBean {
     		@PathVariable("value") String value) {
     	return ResponseEntity.ok(RestControllerUtil.existsByField(service, field, value));
     }
+    
+    @GetMapping(value = "/inativar={id}")
+    public ResponseEntity<Response<Usuario>> inativarUsuarioById(@PathVariable("id") String id) {
+    	Response<Usuario> response = new Response<>();
+		try {
+	        Usuario objeto = service.inativarUsuarioById(id);
+	        response.setData(objeto);
+	        return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.ok(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
+		}
+    }
 }

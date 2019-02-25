@@ -11,4 +11,6 @@ public interface UsuarioService extends CRUDPadraoService<Usuario> {
 
 	Page<Usuario> paginarComParemetros(Integer page, Integer count, Long id, String nome, String login,
 			String statusUsuarioEnum, String funcaoUsuarioEnum);
+	
+	Usuario inativarUsuarioById(String id) throws Exception;
 }
