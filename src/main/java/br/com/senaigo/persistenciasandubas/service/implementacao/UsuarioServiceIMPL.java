@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.senaigo.persistenciasandubas.model.Perfil;
 import br.com.senaigo.persistenciasandubas.model.Usuario;
+import br.com.senaigo.persistenciasandubas.model.enummeration.FuncaoUsuarioEnum;
 import br.com.senaigo.persistenciasandubas.model.enummeration.StatusUsuarioEnum;
 import br.com.senaigo.persistenciasandubas.repository.UsuarioDAO;
 import br.com.senaigo.persistenciasandubas.repository.hql.GenercicDAO;
 import br.com.senaigo.persistenciasandubas.service.PerfilService;
 import br.com.senaigo.persistenciasandubas.service.UsuarioService;
+import br.com.senaigo.persistenciasandubas.util.ConstantesUtil;
 import br.com.senaigo.persistenciasandubas.util.FacesUtil;
 import br.com.senaigo.persistenciasandubas.util.StringUtil;
 import lombok.Getter;
@@ -59,11 +61,14 @@ public class UsuarioServiceIMPL implements UsuarioService{
 			else {
 				objeto.setDataAtivacao(new Date());
 			}
-			objeto.setSenha(passwordEncoder.encode(StringUtil.isNotNullOrEmpity(objeto.getSenha()) 
-					? objeto.getSenha() : FacesUtil.propertiesLoader().getProperty("usuarioSenhaPadrao")));
+			if(StringUtil.isNotNullOrEmpity(objeto.getSenha()) && objeto.getSenha().length() <= 15) {
+				objeto.setSenha(passwordEncoder.encode(objeto.getSenha()));
+			}
+			else if(StringUtil.isNullOrEmpity(objeto.getSenha())) {
+				objeto.setSenha(passwordEncoder.encode(FacesUtil.propertiesLoader().getProperty("usuarioSenhaPadrao")));
+			}
 			List<Perfil> perfis = new LinkedList<>();
 			perfis.add(genericDAO.findByIdEager(Perfil.class, objeto.getFuncaoUsuarioEnum().getId()));
-//			perfis.add(perfilService.findById(objeto.getFuncaoUsuarioEnum().getId()));
 			objeto.setPerfis(perfis);
 			
 			if(objeto.getId() == null || objeto.getId() <= 0) {
@@ -118,17 +123,21 @@ public class UsuarioServiceIMPL implements UsuarioService{
 			String statusUsuarioEnum, String funcaoUsuarioEnum) {
 		nome = StringUtil.tratarStringUninformed(nome);
 		login = StringUtil.tratarStringUninformed(login);
-		statusUsuarioEnum = StringUtil.tratarStringUninformed(statusUsuarioEnum);
-		funcaoUsuarioEnum = StringUtil.tratarStringUninformed(funcaoUsuarioEnum);
 		Pageable pages = PageRequest.of(page, count);
 		Page<Usuario> pagina = null;
 		if(id != null && id > 0) {
 			pagina = persistencia.findById(id, pages);
 		}
+		else if(!statusUsuarioEnum.equals(ConstantesUtil.UNINFORMED)) {
+			pagina = persistencia.findByStatusUsuarioEnum(StatusUsuarioEnum.get(statusUsuarioEnum), pages);
+		}
+		else if(!funcaoUsuarioEnum.equals(ConstantesUtil.UNINFORMED)) {
+			pagina = persistencia.findByFuncaoUsuarioEnum(FuncaoUsuarioEnum.get(funcaoUsuarioEnum), pages);
+		}
 		else {
 			pagina = persistencia.
-					findByNomeIgnoreCaseContainingAndLoginIgnoreCaseContainingAndStatusUsuarioEnumIgnoreCaseContainingAndFuncaoUsuarioEnumIgnoreCaseContainingOrderByIdDesc
-					(nome, login, statusUsuarioEnum, funcaoUsuarioEnum, pages);
+					findByNomeIgnoreCaseContainingAndLoginIgnoreCaseContainingOrderByIdDesc
+					(nome, login, pages);
 		}
 		return pagina;
 	}

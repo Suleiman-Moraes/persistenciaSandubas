@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -74,11 +73,11 @@ public class Usuario implements Serializable{
 	@Column(name = "tipo_funcao")
 	private FuncaoUsuarioEnum funcaoUsuarioEnum;
 	
-	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "id_email")
 	private Email email;
 
-	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "id_telefone")
 	private Telefone telefone;
 
@@ -88,22 +87,28 @@ public class Usuario implements Serializable{
 	private List<Perfil> perfis;
 
 	public Usuario() {}
-	public Usuario(Long id,
-			@Size(min = 6, message = "A confirmação da senha deve ter pelo menos 6 caracteres") String senha,
-			@NotNull String nome, @NotNull String login, Email email, Telefone telefone,
-			@NotNull StatusUsuarioEnum statusUsuarioEnum, @NotNull FuncaoUsuarioEnum funcaoUsuarioEnum,
+	public Usuario(Long id, String senha, String nome, String login, Email email, Telefone telefone,
+			StatusUsuarioEnum statusUsuarioEnum, FuncaoUsuarioEnum funcaoUsuarioEnum,
 			Date dataAtivacao, Date dataDesativacao, List<Perfil> perfis) {
-		this.id = id;
-		this.senha = senha;
-		this.nome = nome;
-		this.login = login;
-		this.email = email;
-		this.telefone = telefone;
-		this.statusUsuarioEnum = statusUsuarioEnum;
-		this.funcaoUsuarioEnum = funcaoUsuarioEnum;
+		this(id, senha, nome, login, statusUsuarioEnum, funcaoUsuarioEnum, email, telefone);
 		this.dataAtivacao = dataAtivacao;
 		this.dataDesativacao = dataDesativacao;
 		this.perfis = perfis;
+	}
+	public Usuario(Long id, String senha, String nome, String login, StatusUsuarioEnum statusUsuarioEnum, 
+			FuncaoUsuarioEnum funcaoUsuarioEnum, Email email, Telefone telefone) {
+		this(senha, nome, login, statusUsuarioEnum, funcaoUsuarioEnum, email, telefone);
+		this.id = id;
+	}
+	public Usuario(String senha, String nome, String login, StatusUsuarioEnum statusUsuarioEnum, 
+			FuncaoUsuarioEnum funcaoUsuarioEnum, Email email, Telefone telefone) {
+		this.senha = senha;
+		this.nome = nome;
+		this.login = login;
+		this.statusUsuarioEnum = statusUsuarioEnum;
+		this.funcaoUsuarioEnum = funcaoUsuarioEnum;
+		this.email = email;
+		this.telefone = telefone;
 	}
 	
 	public Email getEmail() {
