@@ -40,7 +40,7 @@ public class TelefoneCRUD extends ServicosTestTemplateUtil<Telefone>{
 	@Override
 	public void test01FindAll() {
 		Type type = new TypeToken<Response<List<Telefone>>>() {}.getType();
-		testFindAll(2, type);
+		testFindAll(4, type);
 	}
 
 	@Test

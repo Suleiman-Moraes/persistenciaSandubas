@@ -49,7 +49,7 @@ public class PerfilServiceIMPL implements PerfilService{
 					throw new Exception(OBJETO_EXISTENTE);
 				}
 			}
-			return persistencia.save(objeto);
+			return genericDAO.update(objeto);
 		} catch (Exception e) {
 			throw e;
 		}

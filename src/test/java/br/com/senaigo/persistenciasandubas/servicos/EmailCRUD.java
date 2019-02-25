@@ -37,7 +37,7 @@ public class EmailCRUD extends ServicosTestTemplateUtil<Email>{
 	@Override
 	public void test01FindAll() {
 		Type type = new TypeToken<Response<List<Email>>>() {}.getType();
-		testFindAll(2, type);
+		testFindAll(4, type);
 	}
 
 	@Test
