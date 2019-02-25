@@ -58,8 +58,7 @@ public class PerfilServiceIMPL implements PerfilService{
 	@Override
 	public Boolean deleteById(String id) {
 		try {
-			Object objeto = persistencia.findById(new Long(id));
-			genericDAO.delete(objeto);
+			persistencia.deleteById(new Long(id));
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			return Boolean.FALSE;

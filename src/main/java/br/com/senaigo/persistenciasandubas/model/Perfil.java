@@ -42,7 +42,7 @@ public class Perfil implements Serializable {
 	@Column(nullable = false, length = 250)
 	private String descricao;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name = "perfil_funcionalidade", joinColumns = { @JoinColumn(name = "id_perfil") }, inverseJoinColumns = {
 			@JoinColumn(name = "id_funcionalidade") })
 	private List<Funcionalidade> funcionalidades;
