@@ -1,5 +1,7 @@
 package br.com.senaigo.persistenciasandubas.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,7 +49,7 @@ public class ManterUserBean {
 	}
 	
 	@GetMapping
-    public UserMobile novoUserx() {
-		return new UserMobile(null, "123456", "Suleiman", "susu", "suleimanmoraes@gmail.com", "202.153.570-35");
+    public List<UserMobile> novoUserx() {
+		return service.findAll();
     }
 }
