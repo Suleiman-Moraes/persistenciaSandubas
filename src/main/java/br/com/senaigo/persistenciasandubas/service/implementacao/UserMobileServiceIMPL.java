@@ -3,12 +3,14 @@ package br.com.senaigo.persistenciasandubas.service.implementacao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.senaigo.persistenciasandubas.model.UserMobile;
 import br.com.senaigo.persistenciasandubas.repository.UserMobileDAO;
 import br.com.senaigo.persistenciasandubas.repository.hql.GenercicDAO;
 import br.com.senaigo.persistenciasandubas.service.UserMobileService;
 
+@Service
 public class UserMobileServiceIMPL implements UserMobileService{
 	
 	@Autowired
