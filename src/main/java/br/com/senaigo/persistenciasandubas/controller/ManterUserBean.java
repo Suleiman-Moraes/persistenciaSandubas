@@ -49,7 +49,7 @@ public class ManterUserBean {
 	}
 	
 	@GetMapping
-    public List<User> novoUserx() {
-		return service.findAll();
+    public ResponseEntity<Response<List<User>>> findAll() {
+        return ResponseEntity.ok(RestControllerUtil.findAll(service));
     }
 }
