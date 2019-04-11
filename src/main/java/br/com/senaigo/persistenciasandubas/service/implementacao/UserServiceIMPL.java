@@ -5,32 +5,34 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.senaigo.persistenciasandubas.model.UserMobile;
-import br.com.senaigo.persistenciasandubas.repository.UserMobileDAO;
+import br.com.senaigo.persistenciasandubas.model.User;
+import br.com.senaigo.persistenciasandubas.repository.UserDAO;
 import br.com.senaigo.persistenciasandubas.repository.hql.GenercicDAO;
-import br.com.senaigo.persistenciasandubas.service.UserMobileService;
+import br.com.senaigo.persistenciasandubas.service.UserService;
+import lombok.Getter;
 
+@Getter
 @Service
-public class UserMobileServiceIMPL implements UserMobileService{
+public class UserServiceIMPL implements UserService{
 	
 	@Autowired
-	private UserMobileDAO persistencia;
+	private UserDAO persistencia;
 	
 	@Autowired
 	private GenercicDAO genericDAO;
 
 	@Override
-	public List<UserMobile> findAll() {
+	public List<User> findAll() {
 		return persistencia.findAll();
 	}
 
 	@Override
-	public UserMobile findById(String id) {
+	public User findById(String id) {
 		return persistencia.findById(new Long(id)).get();
 	}
 
 	@Override
-	public UserMobile save(UserMobile objeto) throws Exception {
+	public User save(User objeto) throws Exception {
 		try {
 			return persistencia.save(objeto);
 		} catch (Exception e) {
@@ -51,7 +53,7 @@ public class UserMobileServiceIMPL implements UserMobileService{
 	@Override
 	public Boolean existsByField(String fieldName, String value) throws Exception {
 		try {
-			Boolean objeto = genericDAO.existsByField(UserMobile.class, fieldName, value);
+			Boolean objeto = genericDAO.existsByField(User.class, fieldName, value);
 			return objeto;
 		} catch (Exception e) {
 			throw e;
@@ -59,9 +61,9 @@ public class UserMobileServiceIMPL implements UserMobileService{
 	}
 	
 	@Override
-	public UserMobile findByField(String field, String value) {
+	public User findByField(String field, String value) {
 		try {
-			UserMobile objeto = genericDAO.findByField(UserMobile.class, field, value);
+			User objeto = genericDAO.findByField(User.class, field, value);
 			return objeto;
 		} catch (Exception e) {
 			throw e;
@@ -69,9 +71,9 @@ public class UserMobileServiceIMPL implements UserMobileService{
 	}
 
 	@Override
-	public UserMobile login(String login, String senha) throws Exception {
+	public User login(String login, String senha) throws Exception {
 		try {
-			UserMobile objeto = persistencia.findByLoginAndSenha(login, senha);
+			User objeto = persistencia.findByLoginAndSenha(login, senha);
 			if(objeto == null) {
 				throw new Exception("Usuário ou senha incorretos");
 			}

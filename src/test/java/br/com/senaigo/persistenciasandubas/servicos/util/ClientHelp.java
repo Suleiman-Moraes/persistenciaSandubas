@@ -14,11 +14,11 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 
 import br.com.senaigo.persistenciasandubas.model.Token;
-import br.com.senaigo.persistenciasandubas.model.User;
+import br.com.senaigo.persistenciasandubas.model.UserMobile;
 
 public class ClientHelp {
-	public static final String URL = "https://persistenciasandubas.herokuapp.com";
-//	public static final String URL = "http://localhost:8080";
+//	public static final String URL = "https://persistenciasandubas.herokuapp.com";
+	public static final String URL = "http://localhost:8080";
 	
 	private static String TOKEN = null;
 	
@@ -57,7 +57,7 @@ public class ClientHelp {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Arrays.asList(new MediaType[] {MediaType.APPLICATION_JSON}));
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			HttpEntity<User> entity = new HttpEntity<>(new User(), headers);
+			HttpEntity<UserMobile> entity = new HttpEntity<>(new UserMobile(), headers);
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<Token> response = restTemplate.exchange(URL + "/auth", HttpMethod.POST, entity, Token.class);
 			HttpStatus httpStatus = response.getStatusCode();
