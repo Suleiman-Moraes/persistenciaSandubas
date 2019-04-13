@@ -37,7 +37,7 @@ public class ManterUserBean {
 		}
 	}
 	
-	@PostMapping
+	@PostMapping(value = "/login")
 	public ResponseEntity<Response<User>> novoUser(@RequestBody User objeto) {
 		Response<User> response = new Response<>();
 		try {

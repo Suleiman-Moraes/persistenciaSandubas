@@ -9,6 +9,7 @@ import br.com.senaigo.persistenciasandubas.model.User;
 import br.com.senaigo.persistenciasandubas.repository.UserDAO;
 import br.com.senaigo.persistenciasandubas.repository.hql.GenercicDAO;
 import br.com.senaigo.persistenciasandubas.service.UserService;
+import br.com.senaigo.persistenciasandubas.util.StringUtil;
 import lombok.Getter;
 
 @Getter
@@ -34,6 +35,7 @@ public class UserServiceIMPL implements UserService{
 	@Override
 	public User save(User objeto) throws Exception {
 		try {
+			validarUsuario(objeto);
 			return persistencia.save(objeto);
 		} catch (Exception e) {
 			throw e;
@@ -80,6 +82,24 @@ public class UserServiceIMPL implements UserService{
 			return objeto;
 		} catch (Exception e) {
 			throw e;
+		}
+	}
+	
+	private void validarUsuario(User objeto) throws Exception {
+		if(StringUtil.isNullOrEmpity(objeto.getCpf())) {
+			throw new Exception("CPF deve ser informado.");
+		}
+		if(StringUtil.isNullOrEmpity(objeto.getEmail())) {
+			throw new Exception("E-mail deve ser informado.");
+		}
+		if(StringUtil.isNullOrEmpity(objeto.getLogin())) {
+			throw new Exception("Login deve ser informado.");
+		}
+		if(StringUtil.isNullOrEmpity(objeto.getNome())) {
+			throw new Exception("Nome deve ser informado.");
+		}
+		if(StringUtil.isNullOrEmpity(objeto.getSenha())) {
+			throw new Exception("Senha deve ser informada.");
 		}
 	}
 }
