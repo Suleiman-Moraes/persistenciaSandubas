@@ -101,5 +101,18 @@ public class UserServiceIMPL implements UserService{
 		if(StringUtil.isNullOrEmpity(objeto.getSenha())) {
 			throw new Exception("Senha deve ser informada.");
 		}
+		if(objeto.getId() == null || objeto.getId() <= 0) {
+			User user = findByField("login", objeto.getLogin());
+			if(user != null) {
+				throw new Exception("Login ja se encontra em uso.");
+			}
+		}
+		else {
+			User userLogin = findByField("login", objeto.getLogin());
+			User userId = findById(objeto.getId() + "");
+			if(userLogin != null && !userLogin.getId().equals(userId.getId())) {
+				throw new Exception("Login ja se encontra em uso.");
+			}
+		}
 	}
 }
