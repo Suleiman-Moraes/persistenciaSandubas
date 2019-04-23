@@ -1,11 +1,13 @@
 package br.com.senaigo.persistenciasandubas.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 import br.com.senaigo.persistenciasandubas.model.ClassificacaoMercadoria;
 import br.com.senaigo.persistenciasandubas.util.CRUDPadraoService;
 import br.com.senaigo.persistenciasandubas.util.FacesUtil;
 
+@Component
 public interface ClassificacaoMercadoriaService extends CRUDPadraoService<ClassificacaoMercadoria> {
 	public static final String OBJETO_EXISTENTE = FacesUtil.propertiesLoader().getProperty("classificacaoMercadoriaExistente");
 	
