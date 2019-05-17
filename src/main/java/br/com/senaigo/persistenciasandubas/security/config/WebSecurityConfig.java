@@ -57,6 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.css", "/**/*.html", "/**/*.js")
 				.permitAll().antMatchers(
 						"/auth/**",
+						"/pedido/**",
+						"/detalhepedido/**",
 						"/mercadoria/**",
 						"/user/login/**"
 						).permitAll().anyRequest().authenticated();
