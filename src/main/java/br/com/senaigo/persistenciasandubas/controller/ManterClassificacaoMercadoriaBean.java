@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ public class ManterClassificacaoMercadoriaBean {
 
 	@GetMapping
     public ResponseEntity<Response<List<ClassificacaoMercadoria>>> findAll() {
-        return ResponseEntity.ok(RestControllerUtil.findAll(service));
+        return ResponseEntity.status(HttpStatus.OK).body(RestControllerUtil.findAll(service));
     }
  
     @GetMapping(value = "{id}")
@@ -40,17 +41,17 @@ public class ManterClassificacaoMercadoriaBean {
  
     @PostMapping
     public ResponseEntity<Response<ClassificacaoMercadoria>> newObject(@RequestBody ClassificacaoMercadoria objeto) {
-    	return ResponseEntity.ok(RestControllerUtil.save(service, objeto));
+    	return ResponseEntity.status(HttpStatus.CREATED).body(RestControllerUtil.save(service, objeto));
     }
  
     @PutMapping
     public ResponseEntity<Response<ClassificacaoMercadoria>> update(@RequestBody ClassificacaoMercadoria objeto) {
-    	return ResponseEntity.ok(RestControllerUtil.save(service, objeto));
+    	return ResponseEntity.status(HttpStatus.CREATED).body(RestControllerUtil.save(service, objeto));
     }
  
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Response<Boolean>> deleteById(@PathVariable("id") String id) {
-    	return ResponseEntity.ok(RestControllerUtil.deleteById(service, id));
+    	return ResponseEntity.status(HttpStatus.NO_CONTENT).body(RestControllerUtil.deleteById(service, id));
     }
     
     @GetMapping(value = "{page}/{count}/{id}/{nome}/{descricao}")
