@@ -8,4 +8,6 @@ import br.com.senaigo.persistenciasandubas.util.CRUDPadraoService;
 @Component
 public interface DetalhePedidoService extends CRUDPadraoService<DetalhePedido> {
 
+	void validar(DetalhePedido detalhePedido) throws Exception;
+
 }

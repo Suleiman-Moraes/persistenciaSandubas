@@ -8,4 +8,8 @@ import br.com.senaigo.persistenciasandubas.util.CRUDPadraoService;
 @Component
 public interface PedidoService extends CRUDPadraoService<Pedido> {
 
+	Pedido adicionar(Pedido objeto) throws Exception;
+
+	Pedido getPedidoAtual(Long userId) throws Exception;
+
 }

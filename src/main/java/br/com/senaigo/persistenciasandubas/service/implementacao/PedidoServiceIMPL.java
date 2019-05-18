@@ -1,14 +1,18 @@
 package br.com.senaigo.persistenciasandubas.service.implementacao;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.senaigo.persistenciasandubas.model.Pedido;
+import br.com.senaigo.persistenciasandubas.model.User;
 import br.com.senaigo.persistenciasandubas.repository.PedidoDAO;
 import br.com.senaigo.persistenciasandubas.repository.hql.GenercicDAO;
+import br.com.senaigo.persistenciasandubas.service.DetalhePedidoService;
 import br.com.senaigo.persistenciasandubas.service.PedidoService;
+import br.com.senaigo.persistenciasandubas.service.UserService;
 import lombok.Getter;
 
 @Getter
@@ -21,6 +25,12 @@ public class PedidoServiceIMPL implements PedidoService{
 	@Autowired
 	private GenercicDAO genericDAO;
 
+	@Autowired
+	private DetalhePedidoService detalhePedidoService;
+	
+	@Autowired
+	private UserService userService;
+	
 	@Override
 	public List<Pedido> findAll() {
 		return persistencia.findAll();
@@ -68,5 +78,47 @@ public class PedidoServiceIMPL implements PedidoService{
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+	
+	@Override
+	public Pedido adicionar(Pedido objeto) throws Exception {
+		try {
+			validarPedido(objeto);
+			return genericDAO.update(objeto);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public Pedido getPedidoAtual(Long userId) throws Exception{
+		try {
+			if(userId == null) {
+				throw new Exception("Usuário não informado");
+			}
+			Pedido pedido = persistencia.findByDataIsNullAndUserId(userId);
+			if(pedido == null) {
+				pedido = new Pedido();
+				pedido.setDetalhePedidos(new LinkedList<>());
+				User user = userService.findById(userId + "");
+				if(user == null) {
+					throw new Exception("Usuário não encontrado");
+				}
+			}
+			return pedido;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	private void validarPedido(Pedido objeto) throws Exception {
+		if(objeto.getUser() == null) {
+			throw new Exception("Usuário não informado");
+		}
+		if(objeto.getDetalhePedidos() == null || objeto.getDetalhePedidos().isEmpty()) {
+			throw new Exception("Nenhum item do pedido foi informado");
+		}
+		detalhePedidoService.validar(objeto.getDetalhePedidos().get(objeto.getDetalhePedidos().size()-1));
+		
 	}
 }

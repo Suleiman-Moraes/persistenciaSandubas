@@ -6,5 +6,7 @@ import br.com.senaigo.persistenciasandubas.model.Pedido;
 
 public interface PedidoDAO extends JpaRepository<Pedido, Long> {
 
+	Pedido findByDataIsNullAndUserId(Long id);
+
 
 }

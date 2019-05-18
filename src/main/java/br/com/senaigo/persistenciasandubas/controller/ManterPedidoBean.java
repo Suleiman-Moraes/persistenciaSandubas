@@ -3,6 +3,7 @@ package br.com.senaigo.persistenciasandubas.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -63,4 +64,30 @@ public class ManterPedidoBean {
     		@PathVariable("value") String value) {
     	return ResponseEntity.ok(RestControllerUtil.existsByField(service, field, value));
     }
+    
+    @PutMapping(value="/adicionar")
+    public ResponseEntity<Response<Pedido>> adicionar(@RequestBody Pedido objeto){
+       	Response<Pedido> response = new Response<>();
+    	try {
+    		Pedido pedido = service.adicionar(objeto);
+    		response.setData(pedido);
+    		return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
+		}
+    }
+    
+    @GetMapping(value="/getpedido/{userId}")
+    public ResponseEntity<Response<Pedido>> getPedidoAtual(@PathVariable("userId") Long userId){
+       	Response<Pedido> response = new Response<>();
+    	try {
+    		Pedido pedido = service.getPedidoAtual(userId);
+    		response.setData(pedido);
+    		return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
+		}
+    }
+       
 }
+

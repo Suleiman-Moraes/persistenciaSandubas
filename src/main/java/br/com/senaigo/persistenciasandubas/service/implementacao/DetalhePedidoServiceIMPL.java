@@ -69,4 +69,20 @@ public class DetalhePedidoServiceIMPL implements DetalhePedidoService{
 			throw e;
 		}
 	}
+
+	@Override
+	public void validar(DetalhePedido detalhePedido) throws Exception {
+		if(detalhePedido.getTotal() == null || detalhePedido.getTotal() <=0 ) {
+			throw new Exception("Total não informado");
+		}
+		if(detalhePedido.getQuantidade() == null || detalhePedido.getQuantidade() <=0 ) {
+			throw new Exception("Quantidade não informado");
+		}
+		if(detalhePedido.getPrecoUnitario() == null || detalhePedido.getPrecoUnitario() <=0 ) {
+			throw new Exception("Preço não informado");
+		}
+		if(detalhePedido.getMercadoria() == null) {
+			throw new Exception("Mercadoria não informado");
+		}
+	}
 }
