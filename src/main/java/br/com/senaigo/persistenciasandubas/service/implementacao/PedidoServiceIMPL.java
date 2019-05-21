@@ -99,11 +99,14 @@ public class PedidoServiceIMPL implements PedidoService{
 			Pedido pedido = persistencia.findByDataIsNullAndUserId(userId);
 			if(pedido == null) {
 				pedido = new Pedido();
+				pedido.setValorTotal(0.0);
 				pedido.setDetalhePedidos(new LinkedList<>());
 				User user = userService.findById(userId + "");
 				if(user == null) {
 					throw new Exception("Usuário não encontrado");
 				}
+				pedido.setUser(user);
+				pedido = save(pedido);
 			}
 			return pedido;
 		} catch (Exception e) {
