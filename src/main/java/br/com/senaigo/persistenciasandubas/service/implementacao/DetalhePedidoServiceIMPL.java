@@ -96,10 +96,10 @@ public class DetalhePedidoServiceIMPL implements DetalhePedidoService{
 		try {
 			Pedido pedido = pedidoService.getPedidoAtual(userId);
 			pedido.getDetalhePedidos().add(objeto);
-			pedidoService.adicionar(pedido);
+			pedido = pedidoService.adicionar(pedido);
+			return pedido.getDetalhePedidos().get(pedido.getDetalhePedidos().size() - 1);
 		} catch (Exception e) {
-			// TODO: handle exception
+			return null;
 		}
-		return null;
 	}
 }
