@@ -2,6 +2,7 @@ package br.com.senaigo.persistenciasandubas.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -54,6 +55,12 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "pedido_id")
 	private List<DetalhePedido> detalhePedidos;
 
+	public List<DetalhePedido> getDetalhePedidos() {
+		if(detalhePedidos == null) {
+			detalhePedidos = new LinkedList<>();
+		}
+		return detalhePedidos;
+	}
 	
 	@Override
 	public int hashCode() {

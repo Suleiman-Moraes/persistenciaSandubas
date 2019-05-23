@@ -3,6 +3,7 @@ package br.com.senaigo.persistenciasandubas.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,5 +63,18 @@ public class ManterDetalhePedidoBean {
     public ResponseEntity<Response<Boolean>> existsByField(@PathVariable("field") String field, 
     		@PathVariable("value") String value) {
     	return ResponseEntity.ok(RestControllerUtil.existsByField(service, field, value));
+    }
+    
+    @PutMapping(value="/adicionar/{userId}")
+    public ResponseEntity<Response<DetalhePedido>> adicionar(@RequestBody DetalhePedido objeto,
+    		@PathVariable("userId") Long userId){
+       	Response<DetalhePedido> response = new Response<>();
+    	try {
+    		DetalhePedido pedido = service.adicionar(objeto, userId);
+    		response.setData(pedido);
+    		return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
+		}
     }
 }

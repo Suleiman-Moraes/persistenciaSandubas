@@ -10,4 +10,6 @@ public interface DetalhePedidoService extends CRUDPadraoService<DetalhePedido> {
 
 	void validar(DetalhePedido detalhePedido) throws Exception;
 
+	DetalhePedido adicionar(DetalhePedido objeto, Long userId) throws Exception;
+
 }

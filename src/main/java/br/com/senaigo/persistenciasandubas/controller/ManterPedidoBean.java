@@ -67,14 +67,14 @@ public class ManterPedidoBean {
     
     @PutMapping(value="/adicionar")
     public ResponseEntity<Response<Pedido>> adicionar(@RequestBody Pedido objeto){
-       	Response<Pedido> response = new Response<>();
+    	Response<Pedido> response = new Response<>();
     	try {
     		Pedido pedido = service.adicionar(objeto);
     		response.setData(pedido);
     		return ResponseEntity.ok(response);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
-		}
+    	} catch (Exception e) {
+    		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(RestControllerUtil.mostrarErroPadraoObject(response, e.getMessage()));
+    	}
     }
     
     @GetMapping(value="/getpedido/{userId}")

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.senaigo.persistenciasandubas.model.DetalhePedido;
+import br.com.senaigo.persistenciasandubas.model.Pedido;
 import br.com.senaigo.persistenciasandubas.repository.DetalhePedidoDAO;
 import br.com.senaigo.persistenciasandubas.repository.hql.GenercicDAO;
 import br.com.senaigo.persistenciasandubas.service.DetalhePedidoService;
+import br.com.senaigo.persistenciasandubas.service.PedidoService;
 import lombok.Getter;
 
 @Getter
@@ -20,6 +22,9 @@ public class DetalhePedidoServiceIMPL implements DetalhePedidoService{
 	
 	@Autowired
 	private GenercicDAO genericDAO;
+	
+	@Autowired
+	private PedidoService pedidoService;
 
 	@Override
 	public List<DetalhePedido> findAll() {
@@ -84,5 +89,17 @@ public class DetalhePedidoServiceIMPL implements DetalhePedidoService{
 		if(detalhePedido.getMercadoria() == null) {
 			throw new Exception("Mercadoria não informado");
 		}
+	}
+
+	@Override
+	public DetalhePedido adicionar(DetalhePedido objeto, Long userId) throws Exception {
+		try {
+			Pedido pedido = pedidoService.getPedidoAtual(userId);
+			pedido.getDetalhePedidos().add(objeto);
+			pedidoService.adicionar(pedido);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 }
