@@ -33,6 +33,7 @@ public class ManterPedidoBean extends ManterControllerBeanBasic<Pedido>{
     	try {
     		Pedido pedido = service.adicionar(objeto);
     		response.setData(pedido);
+    		RestControllerUtil.logarInfo(this.getClass(), "adicionar == Sucesso");
     		return ResponseEntity.ok(response);
     	} catch (Exception e) {
     		return RestControllerUtil.mostrarErroPadraoObject(this.getClass(), response, e.getMessage());
@@ -58,6 +59,7 @@ public class ManterPedidoBean extends ManterControllerBeanBasic<Pedido>{
     	try {
     		Pedido pedido = service.getPedidoAtual(userId);
     		response.setData(pedido);
+    		RestControllerUtil.logarInfo(this.getClass(), "getPedidoUserIdLast == Sucesso");
     		return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			return RestControllerUtil.mostrarErroPadraoObject(this.getClass(), response, e.getMessage());
