@@ -124,10 +124,12 @@ public abstract class RestControllerUtil {
      * @return
      */
     public static <T> Response<T> mostrarErroPadraoObject(Response<T> response, String... erros) {
+    	logger.error("Error no retorno da requisição");
 		response.setData(null);
 		List<String> listErro = new ArrayList<>();
 		for (String erro : erros) {
 			listErro.add(erro);
+			logger.error(erro);
 		}
 		response.setErros(listErro);
 		return response;
