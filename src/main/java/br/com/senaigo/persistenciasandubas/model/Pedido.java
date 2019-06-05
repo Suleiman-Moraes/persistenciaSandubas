@@ -38,6 +38,10 @@ public class Pedido implements Serializable {
 	@Column(name = "valor_total")
 	private Double valorTotal;
 	
+	private Double lat;
+	
+	private Double log;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -50,6 +54,10 @@ public class Pedido implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_pedido")
+	private Date dataPedido;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name = "pedido_id")
