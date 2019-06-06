@@ -114,6 +114,22 @@ public class PedidoServiceIMPL implements PedidoService{
 		}
 	}
 	
+	@Override
+	public Pedido getPedidoUserIdOpenLast(Long userId) throws Exception {
+		try {
+			if(userId == null) {
+				throw new Exception("Usuário não informado");
+			}
+			List<Pedido> pedidos = persistencia.findByDataPedidoIsNullAndDataIsNotNullAndUserId(userId);
+			if(pedidos != null && !pedidos.isEmpty()) {
+				return pedidos.get(0);
+			}
+			throw new Exception("Pedido não encontrado.");
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	private void validarPedido(Pedido objeto) throws Exception {
 		if(objeto.getUser() == null) {
 			throw new Exception("Usuário não informado");

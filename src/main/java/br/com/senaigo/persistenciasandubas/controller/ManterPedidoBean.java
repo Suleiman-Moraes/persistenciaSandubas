@@ -53,9 +53,22 @@ public class ManterPedidoBean extends ManterControllerBeanBasic<Pedido>{
     
     @GetMapping(value="/user/{userId}/last")
     public ResponseEntity<Response<Pedido>> getPedidoUserIdLast(@PathVariable("userId") Long userId){
-       	Response<Pedido> response = new Response<>();
+    	Response<Pedido> response = new Response<>();
     	try {
     		Pedido pedido = service.getPedidoAtual(userId);
+    		response.setData(pedido);
+    		RestControllerUtil.logarInfo(this.getClass(), "getPedidoUserIdLast == Sucesso");
+    		return ResponseEntity.ok(response);
+    	} catch (Exception e) {
+    		return RestControllerUtil.mostrarErroPadraoObject(this.getClass(), response, e.getMessage());
+    	}
+    }
+    
+    @GetMapping(value="/user/{userId}/openlast")
+    public ResponseEntity<Response<Pedido>> getPedidoUserIdOpenLast(@PathVariable("userId") Long userId){
+       	Response<Pedido> response = new Response<>();
+    	try {
+    		Pedido pedido = service.getPedidoUserIdOpenLast(userId);
     		response.setData(pedido);
     		RestControllerUtil.logarInfo(this.getClass(), "getPedidoUserIdLast == Sucesso");
     		return ResponseEntity.ok(response);
