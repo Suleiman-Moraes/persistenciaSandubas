@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.senaigo.persistenciasandubas.controller.abstracts.ManterControllerBeanBasic;
@@ -66,11 +67,25 @@ public class ManterPedidoBean extends ManterControllerBeanBasic<Pedido>{
     
     @GetMapping(value="/user/{userId}/openlast")
     public ResponseEntity<Response<Pedido>> getPedidoUserIdOpenLast(@PathVariable("userId") Long userId){
-       	Response<Pedido> response = new Response<>();
+    	Response<Pedido> response = new Response<>();
     	try {
     		Pedido pedido = service.getPedidoUserIdOpenLast(userId);
     		response.setData(pedido);
     		RestControllerUtil.logarInfo(this.getClass(), "getPedidoUserIdLast == Sucesso");
+    		return ResponseEntity.ok(response);
+    	} catch (Exception e) {
+    		return RestControllerUtil.mostrarErroPadraoObject(this.getClass(), response, e.getMessage());
+    	}
+    }
+    
+    @GetMapping(value="/user/{userId}/remover")
+    public ResponseEntity<Response<Pedido>> removerDetalhePedido(@PathVariable("userId") Long userId, 
+    		@RequestParam("id") Long id){
+       	Response<Pedido> response = new Response<>();
+    	try {
+    		Pedido pedido = service.removerDetalhePedido(userId, id);
+    		response.setData(pedido);
+    		RestControllerUtil.logarInfo(this.getClass(), "removerDetalhePedido == Sucesso");
     		return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			return RestControllerUtil.mostrarErroPadraoObject(this.getClass(), response, e.getMessage());

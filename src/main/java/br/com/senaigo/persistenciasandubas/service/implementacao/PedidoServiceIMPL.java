@@ -3,6 +3,8 @@ package br.com.senaigo.persistenciasandubas.service.implementacao;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import lombok.Getter;
 @Getter
 @Service
 public class PedidoServiceIMPL implements PedidoService{
+
+	private static final Log logger = LogFactory.getLog(PedidoService.class);
 	
 	@Autowired
 	private PedidoDAO persistencia;
@@ -46,6 +50,7 @@ public class PedidoServiceIMPL implements PedidoService{
 		try {
 			return genericDAO.update(objeto);
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw e;
 		}
 	}
@@ -56,6 +61,7 @@ public class PedidoServiceIMPL implements PedidoService{
 			persistencia.deleteById(new Long(id));
 			return Boolean.TRUE;
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw e;
 		}
 	}
@@ -66,6 +72,7 @@ public class PedidoServiceIMPL implements PedidoService{
 			Boolean objeto = genericDAO.existsByField(Pedido.class, fieldName, value);
 			return objeto;
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw e;
 		}
 	}
@@ -76,6 +83,7 @@ public class PedidoServiceIMPL implements PedidoService{
 			Pedido objeto = genericDAO.findByField(Pedido.class, field, value);
 			return objeto;
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw e;
 		}
 	}
@@ -86,6 +94,7 @@ public class PedidoServiceIMPL implements PedidoService{
 			validarPedido(objeto);
 			return genericDAO.update(objeto);
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw e;
 		}
 	}
@@ -110,6 +119,7 @@ public class PedidoServiceIMPL implements PedidoService{
 			}
 			return pedido;
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw e;
 		}
 	}
@@ -126,6 +136,19 @@ public class PedidoServiceIMPL implements PedidoService{
 			}
 			throw new Exception("Pedido não encontrado.");
 		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	public Pedido removerDetalhePedido(Long userId, Long id) throws Exception{
+		try {
+			Pedido pedido = getPedidoAtual(userId);
+			pedido.getDetalhePedidos().remove(detalhePedidoService.findById(id + ""));
+			return genericDAO.update(pedido);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw e;
 		}
 	}
