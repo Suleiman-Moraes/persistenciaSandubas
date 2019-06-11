@@ -43,6 +43,7 @@ public class ManterPedidoBean extends ManterControllerBeanBasic<Pedido>{
     public ResponseEntity<Response<Pedido>> comprar(@RequestBody Pedido objeto){
     	Response<Pedido> response = new Response<>();
     	try {
+    		RestControllerUtil.logarInfo(this.getClass(), "comprar == Início");
     		Pedido pedido = service.comprar(objeto);
     		response.setData(pedido);
     		RestControllerUtil.logarInfo(this.getClass(), "comprar == Sucesso");
