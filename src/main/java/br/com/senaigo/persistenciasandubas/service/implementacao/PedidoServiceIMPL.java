@@ -1,5 +1,6 @@
 package br.com.senaigo.persistenciasandubas.service.implementacao;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -149,6 +150,17 @@ public class PedidoServiceIMPL implements PedidoService{
 			DetalhePedido detalhePedido = detalhePedidoService.findById(id + "");
 			pedido.getDetalhePedidos().remove(detalhePedido);
 			pedido.removeValorTotal(detalhePedido.getTotal());
+			return genericDAO.update(pedido);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	public Pedido comprar(Pedido pedido) throws Exception{
+		try {
+			pedido.setData(new Date());
 			return genericDAO.update(pedido);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

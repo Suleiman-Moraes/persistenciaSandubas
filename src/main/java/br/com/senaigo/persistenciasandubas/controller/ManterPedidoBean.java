@@ -25,14 +25,27 @@ public class ManterPedidoBean extends ManterControllerBeanBasic<Pedido>{
 	@Autowired
 	@Getter
     private PedidoService service;
+	
+	@PutMapping(value="/adicionar")
+	public ResponseEntity<Response<Pedido>> adicionar(@RequestBody Pedido objeto){
+		Response<Pedido> response = new Response<>();
+		try {
+			Pedido pedido = service.adicionar(objeto);
+			response.setData(pedido);
+			RestControllerUtil.logarInfo(this.getClass(), "adicionar == Sucesso");
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return RestControllerUtil.mostrarErroPadraoObject(this.getClass(), response, e.getMessage());
+		}
+	}
 
-    @PutMapping(value="/adicionar")
-    public ResponseEntity<Response<Pedido>> adicionar(@RequestBody Pedido objeto){
+    @PutMapping(value="/comprar")
+    public ResponseEntity<Response<Pedido>> comprar(@RequestBody Pedido objeto){
     	Response<Pedido> response = new Response<>();
     	try {
-    		Pedido pedido = service.adicionar(objeto);
+    		Pedido pedido = service.comprar(objeto);
     		response.setData(pedido);
-    		RestControllerUtil.logarInfo(this.getClass(), "adicionar == Sucesso");
+    		RestControllerUtil.logarInfo(this.getClass(), "comprar == Sucesso");
     		return ResponseEntity.ok(response);
     	} catch (Exception e) {
     		return RestControllerUtil.mostrarErroPadraoObject(this.getClass(), response, e.getMessage());

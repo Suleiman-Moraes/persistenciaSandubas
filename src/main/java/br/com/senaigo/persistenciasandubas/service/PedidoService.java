@@ -15,4 +15,6 @@ public interface PedidoService extends CRUDPadraoService<Pedido> {
 	Pedido getPedidoUserIdOpenLast(Long userId) throws Exception;
 
 	Pedido removerDetalhePedido(Long userId, Long id) throws Exception;
+
+	Pedido comprar(Pedido pedido) throws Exception;
 }
