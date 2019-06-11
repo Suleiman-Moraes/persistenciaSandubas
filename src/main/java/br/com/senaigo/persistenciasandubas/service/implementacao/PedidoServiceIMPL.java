@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.senaigo.persistenciasandubas.model.DetalhePedido;
 import br.com.senaigo.persistenciasandubas.model.Pedido;
 import br.com.senaigo.persistenciasandubas.model.User;
 import br.com.senaigo.persistenciasandubas.repository.PedidoDAO;
@@ -145,7 +146,9 @@ public class PedidoServiceIMPL implements PedidoService{
 	public Pedido removerDetalhePedido(Long userId, Long id) throws Exception{
 		try {
 			Pedido pedido = getPedidoAtual(userId);
-			pedido.getDetalhePedidos().remove(detalhePedidoService.findById(id + ""));
+			DetalhePedido detalhePedido = detalhePedidoService.findById(id + "");
+			pedido.getDetalhePedidos().remove(detalhePedido);
+			pedido.removeValorTotal(detalhePedido.getTotal());
 			return genericDAO.update(pedido);
 		} catch (Exception e) {
 			logger.error(e.getMessage());

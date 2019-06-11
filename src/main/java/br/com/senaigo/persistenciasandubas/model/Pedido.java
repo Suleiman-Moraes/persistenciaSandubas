@@ -74,6 +74,11 @@ public class Pedido implements Serializable {
 		valorTotal = valorTotal == null ? total : valorTotal + total;
 	}
 	
+	public void removeValorTotal(Double total) {
+		valorTotal = valorTotal == null ? 0.0 : valorTotal - total;
+		valorTotal = valorTotal < 0 ? 0.0 : valorTotal;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
