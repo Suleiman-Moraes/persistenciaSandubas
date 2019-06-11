@@ -70,6 +70,10 @@ public class Pedido implements Serializable {
 		return detalhePedidos;
 	}
 	
+	public void addValorTotal(Double total) {
+		valorTotal = valorTotal == null ? total : valorTotal + total;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
